@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const CONNECT_STRING = "mongodb://127.0.0.1:27017/coffe_shopp";
+const CONNECT_STRING = "mongodb+srv://ddoan951:choidovaobanoi22%40@cluster0.fkexucu.mongodb.net/Coffe_Shopp?retryWrites=true&w=majority";
 
 mongoose.connect(CONNECT_STRING, {
   useNewUrlParser: true,
