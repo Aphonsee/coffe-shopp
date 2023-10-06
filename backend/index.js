@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const ProductModel = require('./models/products');
+const CategoryModel = require('./models/categories');
+const UserModel = require('./models/users');
 
 const app = express();
 app.use(cors());
@@ -24,12 +26,29 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-app.get("/getproducts", (req, res) => {
-    ProductModel.find()
-    .then(products=> res.json(products))
-    .catch(err=> res.json(err))
-});
-
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
+});
+
+
+//api getData
+//get data product
+app.get("/getproducts", (req, res) => {
+    ProductModel.find()
+    .then(products => res.json(products))
+    .catch(err => res.json(err))
+});
+
+//get data category
+app.get("/getcategories", (req, res) => {
+  CategoryModel.find()
+  .then(categories => res.json(categories))
+  .catch(err => err.json(err))
+});
+
+//get data user
+app.get("/getusers", (req, res) => {
+  UserModel.find()
+  .then(users => res.json(users))
+  .catch(err => res.json(err))
 });

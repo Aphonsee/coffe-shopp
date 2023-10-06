@@ -20,12 +20,7 @@ const products = [
   { name: 'Nước ép', description: 'Build strategic funnels that will convert', href: '#'},
 ]
 
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-export default function Header() {
+function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -80,8 +75,6 @@ export default function Header() {
               </Popover.Panel>
             </Transition>
           </Popover>
-
-        
           <a href="#" className="text-lg font-semibold leading-6 text-white">
             Đơn hàng 
           </a>
@@ -96,3 +89,4 @@ export default function Header() {
     </header>
   )
 }
+export default Header
