@@ -18,7 +18,8 @@ export default function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProductList/>} />
-        <Route path="productdetail" element={<ProductDetail />} />
+        <Route path="/productdetail/:productId" element={<ProductDetail />} />
+        <Route path="/productsss" element={<ProductDetail />} />
       </Routes>
     </BrowserRouter>
       

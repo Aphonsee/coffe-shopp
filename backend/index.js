@@ -39,17 +39,12 @@ app.get("/getproducts", (req, res) => {
     .catch(err => res.json(err))
 });
 //productdetail
-app.get('/getProduct/:id', (req, res) => {
+app.get('/getproducts/:_id', (req, res) => {
   const productId = req.params._id;
-
-  ProductModel.findById(productId, (err, product) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      res.json(product);
-    }
-  });
+  ProductModel.findById(productId)
+    .then(products => res.json(products))
+    .catch(err => res.json(err))
+ 
 });
 
 //get data category
