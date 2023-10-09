@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../../component/Header';
@@ -19,6 +21,7 @@ function ProductList() {
     <>
     <Slide/>
       <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      
         {products.map(item => {
           return(
               <div className="mt-10 mx-24" >
@@ -32,7 +35,9 @@ function ProductList() {
             </div>
           )
         })}
+         
       </div>
+    <Footer/>
     </>
   
   )

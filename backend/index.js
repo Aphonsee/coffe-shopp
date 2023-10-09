@@ -38,6 +38,19 @@ app.get("/getproducts", (req, res) => {
     .then(products => res.json(products))
     .catch(err => res.json(err))
 });
+//productdetail
+app.get('/getProduct/:id', (req, res) => {
+  const productId = req.params._id;
+
+  ProductModel.findById(productId, (err, product) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.json(product);
+    }
+  });
+});
 
 //get data category
 app.get("/getcategories", (req, res) => {

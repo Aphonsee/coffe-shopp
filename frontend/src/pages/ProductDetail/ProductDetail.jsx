@@ -2,7 +2,10 @@ import React from 'react'
 
 const ProductDetail = () => {
   return (
-    <div>OrderDetail</div>
+    <div>
+      <p>Giá: {product.price} VNĐ</p>
+      
+    </div>
   )
 }
 
