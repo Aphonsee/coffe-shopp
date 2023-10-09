@@ -21,7 +21,6 @@ function ProductList() {
       
         {products.map(item => {
           return(
-            
               <div className="mt-10 mx-24" >
                 <Link to={`/productdetail/${item._id}`}  key={item._id} >
               <div class='w-48 h-80' >
@@ -29,15 +28,13 @@ function ProductList() {
                 <h2 className='text-center text-cyan-800 uppercase font-bold'> {item.namePro} </h2>
                 <h1 className='text-center text-cyan-800 uppercase font-bold'>Giá: {item.price} VNĐ</h1>
               </div>
-              </Link>
+              </Link> 
             </div>
-            
           )
         })}
          
       </div>
-      
-   
+    <Footer/>
     </>
   
   )

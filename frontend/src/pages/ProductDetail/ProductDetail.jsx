@@ -16,6 +16,7 @@ export default function ProductDetail () {
   },[]);
 
   
+const ProductDetail = () => {
   return (
     <>
    {products && <div>
@@ -33,3 +34,5 @@ export default function ProductDetail () {
     </>
   )
 }
+
+export default ProductDetail

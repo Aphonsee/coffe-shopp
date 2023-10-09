@@ -1,22 +1,15 @@
-// import React from "react";
-// import { createBrowserRouter } from "react-router-dom";
-// import ProductList from "../pages/ProductList/ProductList.jsx";
-// import ProductDetail from "../pages/ProductDetail/ProductDetail.jsx"
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import ProductList from "../pages/ProductList/ProductList";
+import ProductDetail from "../pages/ProductDetail/ProductDetail";
+import Home from "../pages/Home/Home";
 
+const Routers = () => {
+  return <Routes>
+    <Route path="/" element={<Home/>}></Route>
+    <Route path="/productList" element={<ProductList/>}></Route>
+    <Route path="/productDetail" element={<ProductDetail/>}></Route>
+  </Routes>
+}
 
-// const router = createBrowserRouter([
-//       {
-//         path: "/",
-//         element: <Home />,
-//       },
-//       {
-//         path: "/productList",
-//         element: <ProductList />,
-//       },
-//       {
-//         path: "/productDetail",
-//         element: <ProductDetail />,
-//       }
-// ]);
-
-// export default router;
+export default Routers;
