@@ -10,7 +10,7 @@ function ProductList() {
   const[products, setProduct] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3001/getProducts')
+    axios.get('http://localhost:3001/getproducts')
     .then(product => setProduct(product.data))
     .catch(err => console.log(err))
   }, [])
@@ -22,7 +22,7 @@ function ProductList() {
         {products.map(item => {
           return(
               <div className="mt-10 mx-24" >
-                <Link to='productDetail'>
+                <Link to={`/productdetail/${item._id}`}  key={item._id} >
               <div class='w-48 h-80' >
                 <img className="border-2 border-cyan-800 w-72 h-64" src={item.imagePro}/>
                 <h2 className='text-center text-cyan-800 uppercase font-bold'> {item.namePro} </h2>
