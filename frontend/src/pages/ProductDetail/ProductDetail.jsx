@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Footer from '../../component/Footer';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,8 +14,6 @@ export default function ProductDetail () {
 
   },[]);
 
-  
-const ProductDetail = () => {
   return (
     <>
    {products && <div>
@@ -34,5 +31,3 @@ const ProductDetail = () => {
     </>
   )
 }
-
-export default ProductDetail
