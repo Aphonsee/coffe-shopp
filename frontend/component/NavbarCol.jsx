@@ -4,6 +4,8 @@ import axios from 'axios'
 
 function NavbarCol() {
     const[categories, setCategory] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [filteredProducts, setFilteredProducts] = useState([]);
   
     useEffect(() => {
         axios.get('http://localhost:3001/getcategories')
@@ -11,6 +13,19 @@ function NavbarCol() {
         .catch(err => console.log(err))
     }, [])
 
+    useEffect(() => {
+        // Lọc danh sách sản phẩm dựa trên selectedCategory
+        if (selectedCategory) {
+          axios.get(`http://localhost:3001/getproducts?categoryId=${selectedCategory._id}`)
+            .then(response => setFilteredProducts(response.data))
+            .catch(err => console.log(err));
+        }
+      }, [selectedCategory]);
+    
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
+    
   return (
     <div>
         <nav
@@ -28,8 +43,7 @@ function NavbarCol() {
             return(
           <li class="relative pt-4">
             <a
-              key={item._id}
-              onClick={() => setCategory(item.cateName)}
+              onClick={() => handleCategoryClick(item)}
               class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[1.2rem] text-black outline-none  dark:hover:bg-blue-700/10 dark:focus:bg-white/10 dark:active:bg-white/10"
               data-te-sidenav-link-ref>
               <span

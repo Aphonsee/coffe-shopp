@@ -60,3 +60,14 @@ app.get("/getusers", (req, res) => {
   .then(users => res.json(users))
   .catch(err => res.json(err))
 });
+
+// Lọc danh sách sản phẩm dựa trên categoryId
+app.get('/getproducts?categoryId', (req, res) => {
+  const categoryId = req.query.categoryId;
+  if (!categoryId) {
+    return res.status(400).json({ error: 'categoryId is required' });
+  }
+
+  const filteredProducts = products.filter(product => product.categoryId == categoryId);
+  res.json(filteredProducts);
+});

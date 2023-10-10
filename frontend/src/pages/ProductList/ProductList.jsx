@@ -24,7 +24,7 @@ function ProductList() {
       <div class="w-1/4 ml-5">
         <NavbarCol/>
       </div>
-      <div className='w-3/4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 shadow-xl bg-blue-50'>
+      <div className='w-3/4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 shadow-xl bg-blue-50 product-list'>
         {products.map(item => {
           return(
               <div className="my-9 py-6 mx-12" >
