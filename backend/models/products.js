@@ -7,7 +7,11 @@ const productSchema = new mongoose.Schema(
     size: Array,
     price: Number,
     imagePro: String,
-    category: String
+    category: {
+      ref: 'Category',// ref tới cat
+      required: true, //Bắt buộc phải có khi tạo sản phẩm
+      type: mongoose.Types.ObjectId //kiểu dữ liệu của mongodb
+    }
   }
 )
 

@@ -30,9 +30,6 @@ app.listen(3001, () => {
   console.log("Server is running on port 3001");
 });
 
-
-//api getData
-//get data product
 app.get("/getproducts", (req, res) => {
     ProductModel.find()
     .then(products => res.json(products))
@@ -62,12 +59,16 @@ app.get("/getusers", (req, res) => {
 });
 
 // Lọc danh sách sản phẩm dựa trên categoryId
-app.get('/getproducts?categoryId', (req, res) => {
-  const categoryId = req.query.categoryId;
+app.get('/getcategories/:categoryId', (req, res) => {
+  const categoryId = req.params.categoryId
   if (!categoryId) {
     return res.status(400).json({ error: 'categoryId is required' });
   }
-
-  const filteredProducts = products.filter(product => product.categoryId == categoryId);
-  res.json(filteredProducts);
+  ProductModel.find({ category: new mongoose.Types.ObjectId(categoryId) })
+    .then((products) => {
+      res.json(products);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to fetch products' });
+    });
 });

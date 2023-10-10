@@ -11,6 +11,7 @@ function ProductList() {
   const[products, setProduct] = useState([])
 
   useEffect(() => {
+    //cai nay tuyet ha nen tim hieu cai .env trong reactjs di tuyet ha oi, tai zi hok ai public api nhu nay het :)))) newbei a de e tim hieu
     axios.get('http://localhost:3001/getproducts')
     .then(product => setProduct(product.data))
     .catch(err => console.log(err))
