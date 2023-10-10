@@ -7,7 +7,7 @@ function App() {
   return (
    <>
       <Header/>
-      <main>
+      <main className='mt-7'>
         <Routers/>
       </main>
       <Footer/>

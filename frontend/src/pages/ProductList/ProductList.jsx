@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Footer from '../../../component/Footer';
 import Slide from '../../../component/Slide';
 
 
@@ -21,10 +20,10 @@ function ProductList() {
       
         {products.map(item => {
           return(
-              <div className="mt-10 mx-24" >
+              <div className="my-10 mx-24" >
                 <Link to={`/productdetail/${item._id}`}  key={item._id} >
               <div class='w-48 h-80' >
-                <img className="border-2 border-cyan-800 w-72 h-64" src={item.imagePro}/>
+                <img className="border-2 border-cyan-800 w-fit h-[18rem]" src={item.imagePro}/>
                 <h2 className='text-center text-cyan-800 uppercase font-bold'> {item.namePro} </h2>
                 <h1 className='text-center text-cyan-800 uppercase font-bold'>Giá: {item.price} VNĐ</h1>
               </div>
@@ -34,7 +33,6 @@ function ProductList() {
         })}
          
       </div>
-    <Footer/>
     </>
   
   )
