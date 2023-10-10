@@ -14,6 +14,7 @@ export default function ProductDetail () {
 
   },[]);
 
+
   return (
     <>
    {products && <div>
