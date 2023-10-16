@@ -4,27 +4,13 @@ import axios from 'axios'
 
 function NavbarCol() {
     const[categories, setCategory] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-  
+    
     useEffect(() => {
         axios.get('http://localhost:3001/getcategories')
         .then(category => setCategory(category.data))
         .catch(err => console.log(err))
     }, [])
-
-    useEffect(() => {
-        // Lọc danh sách sản phẩm dựa trên selectedCategory
-        if (selectedCategory) {
-          axios.get(`http://localhost:3001/getproducts?categoryId=${selectedCategory._id}`)
-            .then(response => setFilteredProducts(response.data))
-            .catch(err => console.log(err));
-        }
-      }, [selectedCategory]);
     
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-    };
     
   return (
     <div>

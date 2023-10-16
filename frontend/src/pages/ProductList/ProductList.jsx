@@ -11,7 +11,7 @@ function ProductList() {
   const[products, setProduct] = useState([])
 
   useEffect(() => {
-    //cai nay tuyet ha nen tim hieu cai .env trong reactjs di tuyet ha oi, tai zi hok ai public api nhu nay het :)))) newbei a de e tim hieu
+    
     axios.get('http://localhost:3001/getproducts')
     .then(product => setProduct(product.data))
     .catch(err => console.log(err))
@@ -30,7 +30,7 @@ function ProductList() {
           return(
               <div className="my-9 py-6 mx-12" >
                 <Link to={`/productdetail/${item._id}`}  key={item._id} >
-              <div class='w-52 h-72 '>
+              <div class='w-[13rem] h-fit '>
                 <img className="border-2 border-cyan-800 w-fit h-[18rem]" src={item.imagePro}/>
                 <h2 className='text-center text-cyan-800 uppercase font-bold'> {item.namePro} </h2>
                 <h1 className='text-center text-cyan-800 uppercase font-bold'>Giá: {item.price} VNĐ</h1>
@@ -38,10 +38,8 @@ function ProductList() {
               </Link> 
             </div>
           )
-        })}
-         
+        })}  
       </div>
-    
     </div>
     </>
   
