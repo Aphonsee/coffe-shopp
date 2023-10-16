@@ -4,15 +4,11 @@ import axios from 'axios'
 import { Link } from 'react-router-dom';
 import ProductDetail from '../src/pages/ProductDetail/ProductDetail';
 
-/**
- * Id category vao value cua h
- * 
- * 
- */
-
 
 function NavbarCol() {
     const[categories, setCategory] = useState([])
+    const [selectedCategory] = useState(null);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     
     useEffect(() => {
         axios.get('http://localhost:3001/getcategories')
@@ -28,6 +24,7 @@ function NavbarCol() {
             .catch(err => console.log(err));
         }   
       }, [selectedCategory]);
+
     
      
       function renderProducts(products) {
@@ -52,7 +49,7 @@ function NavbarCol() {
             return(
           <li class="relative pt-4">
             <Link to={`/categories/${item._id}`}
-             //onClick={() => handleCategoryClick(item.id)}
+
               class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[1.2rem] text-black outline-none  dark:hover:bg-blue-700/10 dark:focus:bg-white/10 dark:active:bg-white/10"
               data-te-sidenav-link-ref> 
               <span
