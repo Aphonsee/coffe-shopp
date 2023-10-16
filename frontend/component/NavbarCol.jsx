@@ -13,6 +13,8 @@ import ProductDetail from '../src/pages/ProductDetail/ProductDetail';
 
 function NavbarCol() {
     const[categories, setCategory] = useState([])
+    const [selectedCategory] = useState(null);
+    
     
     useEffect(() => {
         axios.get('http://localhost:3001/getcategories')
@@ -28,13 +30,6 @@ function NavbarCol() {
             .catch(err => console.log(err));
         }   
       }, [selectedCategory]);
-    
-     
-      function renderProducts(products) {
-        // TODO: Thực hiện các thao tác để hiển thị danh sách sản phẩm trong giao diện
-        <ProductDetail/>
-      }
-    
   return (
     <div>
         <nav

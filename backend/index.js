@@ -58,13 +58,33 @@ app.get("/getusers", (req, res) => {
     .catch((err) => res.json(err));
 });
 app.post("/signup", (req, res) => {
-  UserModel.create(req.body)
-    .then((users) => res.json(users))
-    .catch((err) => res.json(err));
+  const {username,email,password}=req.body;
+  UserModel.findOne({ username: username })
+  .then((user) => {
+    if (user) 
+       {
+       return res.status(409).json("Ten tai khoan da ton tai");
+       
+      } else {
+        UserModel.create({
+          username: username,
+          email: email,
+          password: password,
+        })
+          .then((users) => res.json("Success"))
+          .catch((error) => res.status(500).json(error));
+      }})
+    .catch(err=>res.status(500).json(err));
 });
+// app.post("/signup", (req, res) => {
+//   const { username, email, password } = req.body;
+//   UserModel.create({ username: username, email: email, password: password })
+//   .then((users) => res.json(users))
+//    .catch(error => res.status(500).json({ error: "Failed to create user" }))
+// });
 app.post("/signin", (req, res) => {
   const { username, password } = req.body;
-  UserModel.findOne({ username:username }).then((user) => {
+  UserModel.findOne({ username: username }).then((user) => {
     if (user) {
       if (user.password === password) {
         res.json("Success");

@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 export default function SigninForm() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const navi=useNavigate();
+ 
+  const navi = useNavigate();
+
   
 
   async function submit(e) {
@@ -19,7 +20,7 @@ export default function SigninForm() {
         .then((result) => {
           console.log(result);
           if (result.data === "Success") {
-            navi("/productlist");
+            navi("/productList");
           }
         })
         .catch((e) => console.log(e));
