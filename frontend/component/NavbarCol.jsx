@@ -13,9 +13,7 @@ import ProductDetail from '../src/pages/ProductDetail/ProductDetail';
 
 function NavbarCol() {
     const[categories, setCategory] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-  
+    
     useEffect(() => {
         axios.get('http://localhost:3001/getcategories')
         .then(category => setCategory(category.data))
