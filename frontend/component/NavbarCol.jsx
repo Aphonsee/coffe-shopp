@@ -1,6 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import ProductDetail from '../src/pages/ProductDetail/ProductDetail';
+
+/**
+ * Id category vao value cua h
+ * 
+ * 
+ */
+
 
 function NavbarCol() {
     const[categories, setCategory] = useState([])
@@ -16,15 +25,17 @@ function NavbarCol() {
     useEffect(() => {
         // Lọc danh sách sản phẩm dựa trên selectedCategory
         if (selectedCategory) {
-          axios.get(`http://localhost:3001/getproducts?categoryId=${selectedCategory._id}`)
+          axios.get(`http://localhost:3001//getcategories/${categoryId}`)
             .then(response => setFilteredProducts(response.data))
             .catch(err => console.log(err));
-        }
+        }   
       }, [selectedCategory]);
     
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-    };
+     
+      function renderProducts(products) {
+        // TODO: Thực hiện các thao tác để hiển thị danh sách sản phẩm trong giao diện
+        <ProductDetail/>
+      }
     
   return (
     <div>
@@ -42,15 +53,15 @@ function NavbarCol() {
           {categories.map((item) => {
             return(
           <li class="relative pt-4">
-            <a
-              onClick={() => handleCategoryClick(item)}
+            <Link to={`/categories/${item._id}`}
+             //onClick={() => handleCategoryClick(item.id)}
               class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[1.2rem] text-black outline-none  dark:hover:bg-blue-700/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-              data-te-sidenav-link-ref>
+              data-te-sidenav-link-ref> 
               <span
                 class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
               </span>
               <span>{item.cateName}</span>
-            </a>
+            </Link>
           </li>
           )})}
          </ul>

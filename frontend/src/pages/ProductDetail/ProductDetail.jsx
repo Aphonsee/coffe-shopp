@@ -13,6 +13,18 @@ export default function ProductDetail () {
     .catch(err => console.log(err))
 
   },[]);
+  function handleCategoryClick(categoryId) {
+    // Xử lý logic để lọc danh sách sản phẩm dựa vào categoryId
+    fetch(`/getcategories/${categoryId}`)
+      .then((response) => response.json())
+      .then((products) => {
+        // Hiển thị danh sách sản phẩm tương ứng
+        renderProducts(products);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch products', error);
+      });
+  }
 
 
   return (
@@ -24,12 +36,14 @@ export default function ProductDetail () {
             <img src={products.imagePro} className="border-2 border-cyan-800 h-fit" />
           </div>
           <div className="w-1/2 pl-8">
+          
             <h2 className="text-3xl font-bold text-black mb-4">{products.namePro}</h2>
-            <p className="text-cyan-800 text-lg mb-4">Size:</p>
-            
-            <p className="text-rose-700 text-lg mb-4">Giá: {products.price} VNĐ</p>
+            <p className="text-cyan-800 text-lg ">Size:</p>
+            <p className="text-sm" > {products.size?.map(sz => {
+              return( <div className="border-solid border-2 rounded-md py-px px-1.5 my-2 inline-block mr-3 hover:bg-slate-500 " key={sz}>{sz}</div>)})} </p>
+            <p className="text-rose-700 text-lg mt-8">Giá: {products.price} VNĐ</p>
             <button
-              className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-4"
+              className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
               onClick="">
               Thêm vào giỏ hàng
             </button>
