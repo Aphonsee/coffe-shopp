@@ -1,8 +1,10 @@
 import { Popover} from '@headlessui/react'
 import { Link } from 'react-router-dom'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 
 function Header() {
+  const {dispatch} = useAuthContext()
 
   return (
     <header className="bg-slate-800 ">
@@ -12,12 +14,13 @@ function Header() {
             <h2 className='text-white text-2xl'>DHDRINKS</h2>
           </a>
         </div>
-        
+        {dispatch !== 'LOGIN' && (
         <Link to="/signin">
             <button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent bg-slate-50 hover:bg-gray-600 h-9 px-4 py-2 absolute md:right-8 md:top-6">
               Đăng nhập
             </button>
           </Link>
+          )}
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
         <Link to="/" className="text-lg font-semibold leading-6 text-white hover:text-blue-500">
             Trang chủ

@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../../context/AuthContext.jsx";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 export default function SignupForm() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const {dispatch} = useAuthContext()
 const [existingAccountError, setExistingAccountError] = useState("");
 
 
