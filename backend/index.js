@@ -76,12 +76,7 @@ app.post("/signup", (req, res) => {
       }})
     .catch(err=>res.status(500).json(err));
 });
-// app.post("/signup", (req, res) => {
-//   const { username, email, password } = req.body;
-//   UserModel.create({ username: username, email: email, password: password })
-//   .then((users) => res.json(users))
-//    .catch(error => res.status(500).json({ error: "Failed to create user" }))
-// });
+
 app.post("/signin", (req, res) => {
   const { username, password } = req.body;
   UserModel.findOne({ username: username }).then((user) => {
@@ -89,13 +84,12 @@ app.post("/signin", (req, res) => {
       if (user.password === password) {
         res.json("Success");
       } else {
-        res.json("sai password");
+        res.status(409).json("sai password");
       }
-    } else {
-      res.json("No record");
-    }
+    }}) 
+    .catch(err=>res.status(500).json(err));
   });
-});
+
 
 // Lọc danh sách sản phẩm dựa trên categoryId
 app.get("/getcategories/:categoryId", (req, res) => {
