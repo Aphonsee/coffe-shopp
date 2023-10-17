@@ -9,26 +9,24 @@ function Signin  () {
         <div className="w-[50%] grid gap-6 mt-[9px]  items-center">
           <div className="space-y-8 m-auto ">
             <div className="mb-9 text-center">
-              {/* <img
-                className="h-[160px] w-[160px] m-auto"
-                src="https://png.pngtree.com/template/20190423/ourlarge/pngtree-smart-phone-logo-template-design-smart-phone-logo-with-modern-image_144959.jpg"
-              /> */}
-              <h2 className="text-[20px] font-bold mb-2">
+              
+              <h2 className="text-[20px] mx-[6rem] font-bold mb-2">
                 Đăng nhập bằng tài khoản
               </h2>
-              <p>
+              
+            </div>
+            <SigninForm />
+            <p>
                 Bạn chưa đăng ký?{" "}
                 <span className="text-blue-600 font-semibold ">
                   <Link to="/signup">Bấm vào đây</Link>
                 </span>
               </p>
-            </div>
-            <SigninForm />
           </div>
         </div>
         <div className="w-[50%] ">
           <img
-            className="h-full object-cover "
+            className="h-full object-cover pb-10"
             src="https://www.slashgear.com/img/gallery/how-to-personalize-the-call-background-on-your-samsung-phone/l-intro-1674766457.jpg"
           />
         </div>

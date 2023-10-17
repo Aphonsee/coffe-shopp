@@ -22,7 +22,7 @@ function ProductList() {
     <>
     <Slide/>
     <div class="flex">
-      <div class="w-1/4 ml-5">
+      <div class="w-1/4">
         <NavbarCol/>
       </div>
       <div className='w-3/4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 shadow-xl bg-blue-50 product-list'>

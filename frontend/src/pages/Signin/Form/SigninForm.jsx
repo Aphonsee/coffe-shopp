@@ -10,11 +10,8 @@ export default function SigninForm() {
  
   const navi = useNavigate();
 
-  
-
   async function submit(e) {
     e.preventDefault();
-    
       await axios
         .post(`http://localhost:3001/signin`, {username,password})
         .then((result) => {
@@ -24,7 +21,6 @@ export default function SigninForm() {
           }
         })
         .catch((e) => console.log(e));
-    
   }
 
   return (
@@ -38,8 +34,7 @@ export default function SigninForm() {
           onChange={(e) => {
             setUserName(e.target.value);
           }}
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg   block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400  
-    "
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg   block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
           required
         />
       </div>

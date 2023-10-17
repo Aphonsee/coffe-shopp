@@ -8,24 +8,11 @@ export default function ProductDetail () {
   const { productId } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/getproducts/${productId}`) // Sử dụng productId thay vì idPro
+    axios.get(`http://localhost:3001/getproducts/${productId}`) 
     .then(product => setProduct(product.data))
     .catch(err => console.log(err))
 
   },[]);
-  function handleCategoryClick(categoryId) {
-    // Xử lý logic để lọc danh sách sản phẩm dựa vào categoryId
-    fetch(`/getcategories/${categoryId}`)
-      .then((response) => response.json())
-      .then((products) => {
-        // Hiển thị danh sách sản phẩm tương ứng
-        renderProducts(products);
-      })
-      .catch((error) => {
-        console.error('Failed to fetch products', error);
-      });
-  }
-
 
   return (
     <>
