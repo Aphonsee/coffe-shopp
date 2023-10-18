@@ -81,8 +81,14 @@ app.post("/signin", (req, res) => {
   const { username, password } = req.body;
   UserModel.findOne({ username: username }).then((user) => {
     if (user) {
+      //cai quan gì day ta :)))))))))
+      //login cho hung` xem di
+
       if (user.password === password) {
-        res.json("Success");
+        res.status(200).json({
+          message: "Thanh cong",
+          data: user
+        });
       } else {
         res.status(409).json("sai password");
       }

@@ -14,9 +14,11 @@ export default function SigninForm() {
     await axios
       .post(`http://localhost:3001/signin`, { username, password })
       .then((result) => {
-        console.log(result);
-        if (result.data === "Success") {
+        console.log(result.data);
+        if (result.data.message === "Thanh cong") {
+          localStorage.setItem('user', result.data.data.username)
           navi("/productList");
+          return window.location.reload()
         }
       })
       .catch((error) => {
