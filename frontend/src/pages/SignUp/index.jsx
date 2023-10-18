@@ -6,9 +6,9 @@ export default function Signup() {
     <>
       <div className="flex">
         <img
-          className="h-screen w-[45%] object-center pb-10"
+          className="h-screen w-[70%] ml-20 object-center pb-10"
           loading="lazy"
-          src="https://images2.thanhnien.vn/528068263637045248/2023/6/26/1-16877379377471288584933.jpg"
+          src="https://i.pinimg.com/236x/ab/98/9e/ab989e3d7e6d39a58b3d3e262a9c924b.jpg"
         />
         
         <div className="w-full flex items-center">

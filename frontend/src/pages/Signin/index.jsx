@@ -27,7 +27,7 @@ function Signin  () {
         <div className="w-[50%] ">
           <img
             className="h-full object-cover pb-10"
-            src="https://www.slashgear.com/img/gallery/how-to-personalize-the-call-background-on-your-samsung-phone/l-intro-1674766457.jpg"
+            src="https://i.pinimg.com/236x/a5/32/4f/a5324fab29fe7ee9da20fc64252076b8.jpg"
           />
         </div>
       </div>
