@@ -11,16 +11,16 @@ const Cart = () => {
                 <span class="sr-only">Image</span>
               </th>
               <th scope="col" class="px-6 py-3">
-                Product
+                Sản phẩm
+              </th>
+              <th scope="col" class="px-14 py-3">
+                Số lượng
               </th>
               <th scope="col" class="px-6 py-3">
-                Qty
+                Giá
               </th>
               <th scope="col" class="px-6 py-3">
-                Price
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Action
+                
               </th>
             </tr>
           </thead>

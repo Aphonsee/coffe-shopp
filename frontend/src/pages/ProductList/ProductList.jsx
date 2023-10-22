@@ -5,10 +5,10 @@ import Slide from '../../../component/Slide';
 import NavbarCol from '../../../component/NavbarCol';
 
 
-
 function ProductList() {
 
   const[products, setProduct] = useState([])
+  
 
   useEffect(() => {
     
