@@ -7,7 +7,8 @@ import { CartContext } from '../src/pages/Cart/CartItem/cart-Context';
 
 function Header() {
   const user = localStorage.getItem('user')
-  const {itemCount, cartItem} = useContext(CartContext)
+  const {itemCount, cartItems} = useContext(CartContext)
+  console.log("CartItem", cartItems);
 
   return (
     <header className="bg-slate-800 ">

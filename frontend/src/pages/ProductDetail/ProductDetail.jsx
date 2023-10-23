@@ -7,7 +7,8 @@ import { isInCart } from "../Cart/CartItem/helpers";
 export default function ProductDetail() {
   const [products, setProduct] = useState([]);
   const { productId } = useParams();
-  const { addProduct, cartItems } = useContext(CartContext);
+  
+  const { addProduct, cartItems,increase } = useContext(CartContext);
 
   useEffect(() => {
     axios
@@ -49,21 +50,25 @@ export default function ProductDetail() {
                 <p className="text-rose-700 text-lg mt-8">
                   Giá: {products.price} VNĐ
                 </p>
-                {!isInCart(products, cartItems) && (
-                  <button 
-                    onClick={() => addProduct(products)}
-                    className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7">
-                    Thêm vào giỏ hàng
-                  </button>
-                )}
-                {isInCart(products, cartItems) && (
-                  <button 
-                    onClick={() => {}}
-                    className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7">
-                    Thêm vào giỏ hàng
-                  </button>
-                )}
+                <div>
+                  {!isInCart(products, cartItems) && 
+                    <button
+                      onClick={() => addProduct(products)}
+                      className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
+                  }
 
+                  {isInCart(products, cartItems) && 
+                    <button
+                      onClick={() => increase(products)}
+                      className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
+                  }
+                </div>
               </div>
             </div>
           </div>
