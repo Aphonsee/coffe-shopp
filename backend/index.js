@@ -97,6 +97,10 @@ app.post("/signin", (req, res) => {
   });
 
 
+//code context cua react nhieu van de nen de hung code backend luon cho ok hunb
+
+//à th vẫn phức tạp :)))
+
 // Lọc danh sách sản phẩm dựa trên categoryId
 app.get("/getcategories/:categoryId", (req, res) => {
   const categoryId = req.params.categoryId;
