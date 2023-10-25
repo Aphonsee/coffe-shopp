@@ -7,9 +7,8 @@ export const CartContext = createContext();
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-       
       const existingProductIndex = state.cart.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
       if (existingProductIndex !== -1) {
@@ -27,12 +26,32 @@ const cartReducer = (state, action) => {
       }
 
     // Thêm sản phẩm vào giỏ hàng
+    // case "REMOVE_FROM_CART":
+    //   // Xóa sản phẩm khỏi giỏ hàng
+    //   return {
+    //     ...state,
+    //     cart: state.cart.filter((item) => item.id !== action.payload),
+    //   };
     case "REMOVE_FROM_CART":
-      // Xóa sản phẩm khỏi giỏ hàng
-      return {
-        ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload.id),
-      };
+      // Tìm sản phẩm cần xóa trong giỏ hàng
+      const productToRemove = state.cart.find(
+        (item) => item.id === action.payload
+      );
+
+      if (productToRemove) {
+        // Tạo một bản sao của giỏ hàng và loại bỏ sản phẩm cần xóa
+        const updatedCart = state.cart.filter(
+          (item) => item.id !== action.payload
+        );
+
+        return {
+          ...state,
+          cart: updatedCart,
+        };
+      } else {
+        return state; // Nếu sản phẩm không tồn tại trong giỏ hàng, không thay đổi trạng thái
+      }
+
     case "COUNT_ITEMS":
       // Trả về số lượng mục trong giỏ hàng (chiều dài của mảng cart)
       return { ...state, itemCount: state.cart.length };
