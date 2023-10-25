@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { CartContext } from "../Cart/CartItem/cart-Context";
-import { isInCart } from "../Cart/CartItem/helpers";
 import { useCart } from "../Cart/CartItemV2/CartItemV2";
 
 export default function ProductDetail() {

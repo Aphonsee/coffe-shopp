@@ -10,7 +10,7 @@ const Cart = () => {
   };
   
    const remove = (productId) => {
-     // Tăng số lượng sản phẩm trong giỏ hàng
+     // Xóa sản phẩm trong giỏ hàng
      dispatch({ type: "REMOVE_FROM_CART;", payload: productId });
    };
 

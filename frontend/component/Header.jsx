@@ -12,9 +12,6 @@ function Header() {
     const { state, dispatch } = useCart();
      console.log(state)
 
-
-  
-
   return (
     <header className="bg-slate-800 ">
       <nav
