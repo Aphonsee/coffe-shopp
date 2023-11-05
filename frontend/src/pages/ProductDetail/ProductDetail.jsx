@@ -10,13 +10,14 @@ export default function ProductDetail() {
     const { state, dispatch } = useCart();
    
   const isInCart = (product) => {
-    return state.cart.some((item) => item.id === product.id);
+    return state.cart.some((item) => item.id === product._id);
   };
   
    const handleAddToCart = () => {
     if (isInCart(products)) {
       // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
       const action = { type: "ADD_TO_CART", payload: products }; // Sử dụng action "ADD_TO_CART" để thêm sản phẩm
+      console.log(products)
       dispatch(action);
     } else {
       // Nếu sản phẩm chưa có trong giỏ hàng, thêm sản phẩm mới
@@ -37,10 +38,6 @@ export default function ProductDetail() {
     // if(products) console.log("Check products >>" + prod/ucts);
   }, []);
 
-
-
-  //tôi mệt bà ghê, co sản phẩm nào hok có số lượng hok ta ủa nhưng mà oder nước mà s mà có số lượng được
-  //bà làm như nước vô hạn
 
   return (
     <>

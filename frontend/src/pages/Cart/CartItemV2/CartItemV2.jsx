@@ -11,10 +11,12 @@ const cartReducer = (state, action) => {
         (item) => item._id === action.payload._id
       );
 
+      
       if (existingProductIndex !== -1) {
         // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng của sản phẩm đó
         const updatedCart = [...state.cart];
         updatedCart[existingProductIndex].quantity += 1;
+
 
         return { ...state, cart: updatedCart };
       } else {
@@ -25,13 +27,26 @@ const cartReducer = (state, action) => {
         };
       }
 
-    // Thêm sản phẩm vào giỏ hàng
-    // case "REMOVE_FROM_CART":
-    //   // Xóa sản phẩm khỏi giỏ hàng
-    //   return {
-    //     ...state,
-    //     cart: state.cart.filter((item) => item.id !== action.payload),
-    //   };
+    case "INCREASE_ITEM_CART":
+      {
+
+
+        const existingProductIndex = state.cart.findIndex(
+          (item) => item._id === action.payload
+          );
+          console.log(existingProductIndex)
+          
+          if (existingProductIndex !== -1) {
+            // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng của sản phẩm đó
+        const updatedCart = [...state.cart];
+        updatedCart[existingProductIndex].quantity += 1;
+
+        return { ...state, cart: updatedCart };
+      } 
+      return;
+      }
+
+
     case "REMOVE_FROM_CART":
       // Tìm sản phẩm cần xóa trong giỏ hàng
       const productToRemove = state.cart.find(

@@ -1,13 +1,14 @@
 import React from "react";
 import { useCart } from "./CartItemV2/CartItemV2";
 
+
 const Cart = () => {
   const { state, dispatch } = useCart();
-   
   const increaseQuantity = (productId) => {
     // Tăng số lượng sản phẩm trong giỏ hàng
-    dispatch({ type: "ADD_TO_CART", payload: productId });
+    dispatch({ type: "INCREASE_ITEM_CART", payload: productId });
   };
+
   
    const remove = (productId) => {
      // Xóa sản phẩm trong giỏ hàng
@@ -27,7 +28,7 @@ const Cart = () => {
   //console.log(state.Cart)
   return (
     <div>
-      {!state.cart ? (
+      {state.cart.length !== 0 ? (
         <div class="relative overflow-x-auto mx-auto shadow-md sm:rounded-lg w-[80%]">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -81,14 +82,14 @@ const Cart = () => {
                       <div>
                         <input
                           type="number"
-                          id={product.id}
+                          id={product._id}
                           class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           value={product.quantity}
                           required
                         />
                       </div>
                       <button
-                        //onClick={() => increaseQuantity(product.id)}
+                        //onClick={() => increaseQuantity(product._id)}
                         class="inline-flex items-center justify-center h-6 w-6 p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         type="button"
                       >
@@ -116,7 +117,7 @@ const Cart = () => {
                   </td>
                   <td class="px-6 py-4">
                     <button
-                      onClick={() => remove(product.id)}
+                      //onClick={() => remove(product.id)}
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >
                       <svg
@@ -137,15 +138,17 @@ const Cart = () => {
                   </td>
                 </tr>
               ))}
-              <tr class="relative bg-slate-700 text-2xl">
+              <tr class="relative bg-slate-700 text-2xl text-white">
                 <td></td>
                 <td></td>
-                <td className="text-center">Tổng tiền: </td>
+                <td className="text-center ">Tổng tiền: </td>
                 <td>${sumPrice()}</td>
                 <td></td>
               </tr>
             </tbody>
+            
           </table>
+          <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">Thanh toán</button>
         </div>
       ) : (
         <div class="bg-gray-100 h-screen flex items-center justify-center">

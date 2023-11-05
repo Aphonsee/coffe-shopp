@@ -58,13 +58,11 @@ app.get("/getusers", (req, res) => {
     .catch((err) => res.json(err));
 });
 app.post("/signup", (req, res) => {
-  const {username,email,password}=req.body;
+  const { username, email, password } = req.body;
   UserModel.findOne({ username: username })
-  .then((user) => {
-    if (user) 
-       {
-       return res.status(409).json("Ten tai khoan da ton tai");
-       
+    .then((user) => {
+      if (user) {
+        return res.status(409).json("Ten tai khoan da ton tai");
       } else {
         UserModel.create({
           username: username,
@@ -73,33 +71,28 @@ app.post("/signup", (req, res) => {
         })
           .then((users) => res.json("Success"))
           .catch((error) => res.status(500).json(error));
-      }})
-    .catch(err=>res.status(500).json(err));
+      }
+    })
+    .catch((err) => res.status(500).json(err));
 });
 
 app.post("/signin", (req, res) => {
   const { username, password } = req.body;
-  UserModel.findOne({ username: username }).then((user) => {
-    if (user) {
-      //cai quan gì day ta :)))))))))
-      //login cho hung` xem di
-
-      if (user.password === password) {
-        res.status(200).json({
-          message: "Thanh cong",
-          data: user
-        });
-      } else {
-        res.status(409).json("sai password");
+  UserModel.findOne({ username: username })
+    .then((user) => {
+      if (user.username) {
+        if (user.password === password) {
+          res.status(200).json({
+            message: "Thanh cong",
+            data: user,
+          });
+        } else {
+          res.status(409).json("sai password");
+        }
       }
-    }}) 
-    .catch(err=>res.status(500).json(err));
-  });
-
-
-//code context cua react nhieu van de nen de hung code backend luon cho ok hunb
-
-//à th vẫn phức tạp :)))
+    })
+    .catch((err) => res.status(500).json(err));
+});
 
 // Lọc danh sách sản phẩm dựa trên categoryId
 app.get("/getcategories/:categoryId", (req, res) => {
@@ -115,3 +108,23 @@ app.get("/getcategories/:categoryId", (req, res) => {
       res.status(500).json({ error: "Failed to fetch products" });
     });
 });
+
+//Cập nhật thông tin sản phẩm 
+app.put('/updatepro/:productId', (req, res) => {
+  const productId = req.params.productId;
+  ProductModel.findByIdAndUpdate({_id:productId}, {
+    namePro: req.body.namePro,
+    price: req.body.price,
+    imagePro: req.body.imagePro,
+    category: req.body.category
+  })
+  .then(product => res.json(product))
+  .catch(err => res.json(err))
+})
+
+//Tạo sản phẩm
+app.post("/createpro", (req, res) => {
+  ProductModel.create(req.body)
+  .then(product => res.json(product))
+  .catch(err => res.json(err))
+})
