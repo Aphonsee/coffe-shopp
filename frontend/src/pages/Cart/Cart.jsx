@@ -1,6 +1,6 @@
 import React from "react";
 import { useCart } from "./CartItemV2/CartItemV2";
-
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { state, dispatch } = useCart();
@@ -9,21 +9,20 @@ const Cart = () => {
     dispatch({ type: "INCREASE_ITEM_CART", payload: productId });
   };
 
-  
-   const remove = (productId) => {
-     // Xóa sản phẩm trong giỏ hàng
-     dispatch({ type: "REMOVE_FROM_CART", payload: productId });
-   };
+  const remove = (productId) => {
+    // Xóa sản phẩm trong giỏ hàng
+    dispatch({ type: "REMOVE_FROM_CART", payload: productId });
+  };
 
-   const sumPrice = () => {
-        let totalPrice = 0;
-        //lặp tính giá trị của từng sản phẩm có trong giỏ hàng
-        state.cart.forEach((product) => {
-          totalPrice += product.price * product.quantity;
-        });
+  const sumPrice = () => {
+    let totalPrice = 0;
+    //lặp tính giá trị của từng sản phẩm có trong giỏ hàng
+    state.cart.forEach((product) => {
+      totalPrice += product.price * product.quantity;
+    });
 
-        return totalPrice;
-   }
+    return totalPrice;
+  };
 
   //console.log(state.Cart)
   return (
@@ -146,9 +145,12 @@ const Cart = () => {
                 <td></td>
               </tr>
             </tbody>
-            
           </table>
-          <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">Thanh toán</button>
+          <Link to="/checkout">
+            <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+              Thanh toán
+            </button>
+          </Link>
         </div>
       ) : (
         <div class="bg-gray-100 h-screen flex items-center justify-center">
@@ -157,8 +159,8 @@ const Cart = () => {
               Giỏ hàng của bạn đang trống
             </h1>
             <p class="text-gray-600 text-center">
-              Không có sản phẩm nào trong giỏ hàng của bạn. 
-              Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm.
+              Không có sản phẩm nào trong giỏ hàng của bạn. Hãy thêm sản phẩm
+              vào giỏ hàng để tiếp tục mua sắm.
             </p>
             <a
               href="/productList"

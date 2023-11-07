@@ -10,6 +10,7 @@ import Cart from "../pages/Cart/Cart";
 import Admin from "../admin/QLProducts";
 import UpdateProduct from "../admin/FormUpdate/UpdateProduct";
 import CreateProduct from "../admin/FormCreate/CreateProduct";
+import Checkout from "../pages/Checkout/Checkout";
 
 
 
@@ -25,6 +26,7 @@ const Routers = () => {
     <Route path="/adminPage" element={<Admin/>}></Route>
     <Route path="/updatepro/:productId" element={<UpdateProduct/>}/>
     <Route path="/createPro" element={<CreateProduct/>}></Route>
+    <Route path="/checkout" element={<Checkout/>}></Route>
   </Routes>
 }
 

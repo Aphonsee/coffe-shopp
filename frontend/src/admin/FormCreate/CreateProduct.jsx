@@ -2,22 +2,37 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ItemCategories from "../FormUpdate/ItemCategories";
-function CreateProduct() {
 
+
+
+function CreateProduct() {
+  const [namePro, setNamePro] = useState();
+  const [price, setPrice] =useState();
+  const size = ["S", "M", "L"];
   const [category, setCategory] = useState();
+  const [imagePro, setImagePro] = useState();
   const navi = useNavigate();
 
   const handleClickCategory = (item) => {
     setCategory(item.target.value);
   }
 
+  const Submit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:3001/createpro", {namePro, size, price, imagePro, category})
+    .then(result => {
+      console.log(result) 
+      navi("/adminPage")
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <>
       <div class="max-w-md mx-auto bg-gray-400 p-6 rounded-md shadow-md">
-        <h1 class="text-2xl font-semibold mb-4">Cập Nhật Sản Phẩm</h1>
+        <h1 class="text-2xl font-semibold mb-4">Thêm Sản Phẩm</h1>
         <form
-          
+          onSubmit={Submit}
           action="/update-product"
           method="post"
           enctype="multipart/form-data"
@@ -33,6 +48,7 @@ function CreateProduct() {
               type="text"
               id="product_name"
               name="product_name"
+              onChange={(e) => setNamePro(e.target.value)}
               class="mt-1 p-2 block w-full border rounded-md"
               required
             />
@@ -48,6 +64,7 @@ function CreateProduct() {
               type="number"
               id="product_price"
               name="product_price"
+              onChange={(e) => setPrice(e.target.value)}
               class="mt-1 p-2 block w-full border rounded-md"
               required
             />
@@ -62,7 +79,7 @@ function CreateProduct() {
             >
               Hình Sản Phẩm
             </label>
-            <img src={} className="w-32" />
+            <img src={!imagePro ? ("https://i.pinimg.com/236x/d8/68/48/d86848cf828d989955711050a7645dc5.jpg"):(imagePro)} className="w-32" />
             <input
               type="file"
               id="product_image"
@@ -80,7 +97,7 @@ function CreateProduct() {
               type="submit"
               class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
             >
-              Cập Nhật
+              Thêm sản phẩm
             </button>
           </div>
         </form>
