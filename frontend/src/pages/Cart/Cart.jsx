@@ -127,6 +127,7 @@ const Cart = () => {
                         <input
                           type="number"
                           id={product._id}
+                          id={product._id}
                           class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           value={cart.cart_item[index].quantity}
                           required
@@ -182,7 +183,7 @@ const Cart = () => {
                   </td>
                 </tr>
               ))}
-              <tr class="relative bg-slate-700 text-2xl">
+              <tr class="relative bg-slate-700 text-2xl text-white">
                 <td></td>
                 <td></td>
                 <td className="text-center">Tổng tiền: </td>
@@ -191,6 +192,11 @@ const Cart = () => {
               </tr>
             </tbody>
           </table>
+          <Link to="/checkout">
+            <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+              Thanh toán
+            </button>
+          </Link>
         </div>
       ) : (
         <div class="bg-gray-100 h-screen flex items-center justify-center">

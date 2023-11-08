@@ -11,7 +11,6 @@ function ProductList() {
   
 
   useEffect(() => {
-    
     axios.get('http://localhost:3001/getproducts')
     .then(product => setProduct(product.data))
     .catch(err => console.log(err))

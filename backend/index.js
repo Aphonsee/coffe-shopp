@@ -67,13 +67,13 @@ app.get("/getcart/:userId", (req, res) => {
     .catch((err) => res.json(err));
 });
 app.post("/signup", (req, res) => {
-  const { username, email, password } = req.body;
-
-  // Kiểm tra xem tên người dùng đã tồn tại chưa
+  const {username,email,password}=req.body;
   UserModel.findOne({ username: username })
-    .then((user) => {
-      if (user) {
-        return res.status(409).json("Tên tài khoản đã tồn tại");
+  .then((user) => {
+    if (user) 
+       {
+       return res.status(409).json("Ten tai khoan da ton tai");
+       
       } else {
         // Tạo người dùng mới
         UserModel.create({
@@ -120,6 +120,12 @@ app.post("/signin", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
+
+//code context cua react nhieu van de nen de hung code backend luon cho ok hunb
+
+//à th vẫn phức tạp :)))
+
+// Lọc danh sách sản phẩm dựa trên categoryId
 app.get("/getcategories/:categoryId", (req, res) => {
   const categoryId = req.params.categoryId;
   if (!categoryId) {
@@ -195,3 +201,85 @@ app.post("/cart/addItems", (req, res) => {
       res.status(500).json(error);
     });
 });
+
+//Cart
+//Lúc này mỗi user có 1 giỏ hàng r thì bắt đầu giải quyết làm sao để thêm sản phẩm vào giỏ hàng
+app.post("/cart/addItems", (req, res) => {
+  const userId = req.body.userId;
+  const productId = req.body.productId; // Lấy ID của sản phẩm từ request bo
+  const quantity = req.body.quantity; // Lấy số lượng từ request bod
+  const price = +req.body.price;
+
+  // Kiểm tra xem sản phẩm đã tồn tại trong mảng items_cart hay chưa
+  createCart
+    .findOne({ userId: userId })
+    .then((cart) => {
+      
+      if (cart) {
+        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng hay chưa
+        const existingProduct = cart.cart_item.find(
+          (item) => item.productId.toString() === productId.toString()
+        );
+
+        if (existingProduct) {
+          // Nếu sản phẩm đã tồn tại, tăng số lượng
+          existingProduct.quantity += quantity;
+          existingProduct.price *= existingProduct.quantity;
+
+          //hmm hung nghi la price no tang len r a
+          //con bug gi nua hok no kh len cai giao dien nua do
+        } else {
+          // Nếu sản phẩm chưa tồn tại, thêm mới sản phẩm vào giỏ hàng
+          cart.cart_item.push({
+            productId,
+            quantity,
+            price,
+          });
+        }
+        // ý là thêm được r á nhưng tối qua hà sửa cái gì h nó hết hiện lên hà đang vướng chỗ tính tổng tiền nè
+
+        // Lưu lại giỏ hàng sau khi thay đổ
+        cart
+          .save()
+          .then(() => {
+            res.json({
+              success: true,
+              message: "Sản phẩm đã được thêm vào giỏ hàng",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).json(error);
+          });
+      } else {
+        // Nếu không tìm thấy giỏ hàng của người dùng, bạn có thể xử lý tạo giỏ hàng mới ở đây nếu cần.
+        // Tùy theo yêu cầu của ứng dụng của bạn.
+        res
+          .status(404)
+          .json({ error: "Không tìm thấy giỏ hàng của người dùng" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+//Cập nhật thông tin sản phẩm 
+app.put('/updatepro/:productId', (req, res) => {
+  const productId = req.params.productId;
+  ProductModel.findByIdAndUpdate({_id:productId}, {
+    namePro: req.body.namePro,
+    price: req.body.price,
+    imagePro: req.body.imagePro,
+    category: req.body.category
+  })
+  .then(product => res.json(product))
+  .catch(err => res.json(err))
+})
+
+//Tạo sản phẩm
+app.post("/createpro", (req, res) => {
+  ProductModel.create(req.body)
+  .then(product => res.json(product))
+  .catch(err => res.json(err))
+})

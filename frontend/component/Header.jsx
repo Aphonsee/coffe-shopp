@@ -23,6 +23,7 @@ function Header() {
             <h2 className="text-white text-2xl">DHDRINKS</h2>
           </a>
         </div>
+
         {!user ? (
           <Link to="/signin">
             <button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent bg-slate-50 hover:bg-gray-600 h-9 px-4 py-2 absolute md:right-8 md:top-6">
@@ -84,9 +85,49 @@ function Header() {
               <span>1</span>
             </div>
           </Link>
+          {!user ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8 ml-3 text-green-600"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          ) : (
+            <div className="text-purple-500 text-xl flex ml-5">
+              <h1>{user.toString().toLocaleUpperCase()}</h1>
+              {user.toString().toLocaleUpperCase() === "ADMIN" && (
+                <Link to="/adminPage">
+                  <button className="bg-white text-black hover:bg-gray-600 h-9 px-2 py-2 md:right-8 md:top-6 rounded-md ml-3 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                      />
+                    </svg>
+                  </button>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </nav>
     </header>
   );
 }
-export default Header
+export default Header;
