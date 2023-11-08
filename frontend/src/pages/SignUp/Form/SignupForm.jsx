@@ -23,6 +23,7 @@ const [existingAccountError, setExistingAccountError] = useState("");
       console.log(response);
       if (response.data === "Success") {
         navigate("/signin");
+
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {

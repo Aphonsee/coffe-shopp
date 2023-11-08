@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SigninForm() {
   const [username, setUserName] = useState("");
+
   const [password, setPassword] = useState("");
   const [existingAccountError, setExistingAccountError] = useState("");
 
@@ -16,9 +17,11 @@ export default function SigninForm() {
       .then((result) => {
         console.log(result.data);
         if (result.data.message === "Thanh cong") {
-          localStorage.setItem('user', result.data.data.username)
+          localStorage.setItem("user", result.data.data.username);
+          localStorage.setItem("userId", result.data.data._id);
+
           navi("/productList");
-          return window.location.reload()
+          return window.location.reload();
         }
       })
       .catch((error) => {

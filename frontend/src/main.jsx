@@ -3,17 +3,16 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import CartContextProvider from "./pages/Cart/CartItem/cart-Context.jsx";
-import { CartProvider } from "./pages/Cart/CartItemV2/CartItemV2.jsx";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CartProvider>
-      <CartContextProvider>
+  {/* nay h tuyet ha code o phan nao no ra bug cho do z hôm qua h hà chỉ có chỗ cart thôi tối hôm qua vẫn chạy bth mà  */}
+      
       <BrowserRouter>
         <App />
       </BrowserRouter>
-      </CartContextProvider>
-    </CartProvider>
+      
+  
   </React.StrictMode>
 );
