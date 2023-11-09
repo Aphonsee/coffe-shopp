@@ -7,21 +7,20 @@ const Cart = () => {
 
   const { cartId } = useParams();
 
-  useEffect(() => {
+  
     const fetchCartData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3001/getcart/${cartId}`
         );
         setCart(response.data);
-        // localStorage.setItem("cart", JSON.stringify(response.data.cart_item));
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchCartData();
-  }, [cartId]);
+  
 
   useEffect(() => {
     const productPromises = cart.cart_item?.map((product) => {
@@ -38,14 +37,7 @@ const Cart = () => {
       .catch((err) => console.log(err));
   }, [cart.cart_item]);
 
-  const increaseQuantity1 = (index) => {
-    const updatedCart = [...cart.cart_item];
-    updatedCart[index].quantity += 1;
-    cart.cart_item[index].price =
-      (cart.cart_item[index].price / (updatedCart[index].quantity - 1)) *
-      updatedCart[index].quantity;
-    setCart({ ...cart, cart_item: updatedCart });
-  };
+  
   const increaseQuantity = (Id) => {
     
     // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
@@ -61,29 +53,23 @@ const Cart = () => {
         console.error("Lỗi khi tăng số lượng sản phẩm ", error);
       });
   };
-  const decreaseQuantity = (Id) => {
-    // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
-    axios
-      .put(`http://localhost:3001/cart/decreaseQuantity/${cartId}/${Id}`, {
-        productId: Id,
-      })
-      .then((response) => {
-        console.log("Sản phẩm đã được giảm 1", response.data);
-        setCart(response);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi giảm số lượng sản phẩm ", error);
-      });
+   const decreaseQuantity = (Id) => {
+     // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
+     axios
+       .put(`http://localhost:3001/cart/decreaseQuantity/${cartId}/${Id}`, {
+         productId: Id,
+       })
+       .then((response) => {
+         console.log("Sản phẩm đã giảm thêm 1", response.data);
+         setCart(...cart);
+       })
+       .catch((error) => {
+         console.error("Lỗi khi giảm số lượng sản phẩm ", error);
+       });
+   };
 
-  };
 
- 
 
-  const sumPrice1 = () => {
-    return cart.cart_item?.reduce((prev, current) => {
-      return (prev += current.price);
-    }, 0);
-  };
   const sumPrice=() =>{
     let totalPrice = 0;
 
@@ -99,7 +85,7 @@ const Cart = () => {
     axios
       .delete(`http://localhost:3001/deleteitem/${cartId}/${Id}`)
       .then((updatedCart) => {
-        window.location.href = `/cart/${cartId}`;
+        //window.location.href = `/cart/${cartId}`;
         setCart(updatedCart);
       })
       .catch((error) => console.log("Sản phẩm chưa được xóa ", error));
@@ -167,7 +153,7 @@ const Cart = () => {
                           type="number"
                           id={product._id}
                           class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          value={cart.cart_item[index].quantity}
+                          value={cart.cart_item[index]?.quantity}
                           required
                         />
                       </div>

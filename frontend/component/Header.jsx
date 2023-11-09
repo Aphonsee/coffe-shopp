@@ -15,6 +15,19 @@ function Header() {
       .catch((err) => console.log(err));
   }, [cartId]);
 
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/getcart/${cartId}`
+      );
+      setCart(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchCartData();
+  
   const totalQuantity = user
     ? cart.cart_item.reduce((total, item) => total + item.quantity, 0)
     : 0;
@@ -89,7 +102,7 @@ function Header() {
             </svg>
 
             <div class="absolute top-0 right-0 -mt-[4px] -mr-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-              <span>1</span>
+              <span>{totalQuantity}</span>
             </div>
           </Link>
           {!user ? (
