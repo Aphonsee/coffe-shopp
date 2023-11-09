@@ -15,6 +15,19 @@ function Header() {
       .catch((err) => console.log(err));
   }, [cartId]);
 
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/getcart/${cartId}`
+      );
+      setCart(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchCartData();
+  
   const totalQuantity = user
     ? cart.cart_item.reduce((total, item) => total + item.quantity, 0)
     : 0;
