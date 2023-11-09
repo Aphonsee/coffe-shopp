@@ -222,6 +222,7 @@ app.post("/createpro", (req, res) => {
     .then((product) => res.json(product))
     .catch((err) => res.json(err));
 });
+
 //Xóa sản phẩm trong giỏ hàng
 app.delete("/deleteitem/:userId/:productId", (req, res) => {
   const userId = req.params.userId;
@@ -324,9 +325,9 @@ app.put("/cart/decreaseQuantity/:userId/:productId", (req, res) => {
         );
 
         if (existingProduct) {
-          // Tăng số lượng sản phẩm
+          // Giảm số lượng sản phẩm
           existingProduct.quantity -= 1;
-
+          
           // Lưu giỏ hàng sau khi cập nhật
           cart
             .save()

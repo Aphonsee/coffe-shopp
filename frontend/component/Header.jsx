@@ -89,7 +89,7 @@ function Header() {
             </svg>
 
             <div class="absolute top-0 right-0 -mt-[4px] -mr-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-              <span>1</span>
+              <span>{totalQuantity}</span>
             </div>
           </Link>
           {!user ? (

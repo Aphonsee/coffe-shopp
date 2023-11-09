@@ -38,14 +38,7 @@ const Cart = () => {
       .catch((err) => console.log(err));
   }, [cart.cart_item]);
 
-  const increaseQuantity1 = (index) => {
-    const updatedCart = [...cart.cart_item];
-    updatedCart[index].quantity += 1;
-    cart.cart_item[index].price =
-      (cart.cart_item[index].price / (updatedCart[index].quantity - 1)) *
-      updatedCart[index].quantity;
-    setCart({ ...cart, cart_item: updatedCart });
-  };
+  
   const increaseQuantity = (Id) => {
     
     // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
@@ -62,14 +55,18 @@ const Cart = () => {
       });
   };
   const decreaseQuantity = (Id) => {
-    // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
+    // Gọi phương thức POST để giảm số lượng sản phẩm trong giỏ hàng
     axios
       .put(`http://localhost:3001/cart/decreaseQuantity/${cartId}/${Id}`, {
         productId: Id,
       })
       .then((response) => {
-        console.log("Sản phẩm đã được giảm 1", response.data);
-        setCart(response);
+        if(response > 0) {
+          console.log("Sản phẩm đã được giảm 1", response.data);
+          setCart(response);
+        } else {
+          remove(response)
+        }
       })
       .catch((error) => {
         console.error("Lỗi khi giảm số lượng sản phẩm ", error);
@@ -78,12 +75,6 @@ const Cart = () => {
   };
 
  
-
-  const sumPrice1 = () => {
-    return cart.cart_item?.reduce((prev, current) => {
-      return (prev += current.price);
-    }, 0);
-  };
   const sumPrice=() =>{
     let totalPrice = 0;
 
