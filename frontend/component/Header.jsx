@@ -1,28 +1,24 @@
-import { Popover} from '@headlessui/react'
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Popover } from "@headlessui/react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function Header() {
-  const user = localStorage.getItem('user')
+  const user = localStorage.getItem("user");
   const userId = localStorage.getItem("userId");
-   const [cart, setCart] = useState({ cart_item: [] });
-   const { cartId } = useParams();
-    useEffect(() => {
-      axios
-        .get(`http://localhost:3001/getcart/${userId}`)
-        .then((cart) => setCart(cart.data))
-        .catch((err) => console.log(err));
-    }, [cartId]);
+  const [cart, setCart] = useState({ cart_item: [] });
+  const { cartId } = useParams();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/getcart/${userId}`)
+      .then((cart) => setCart(cart.data))
+      .catch((err) => console.log(err));
+  }, [cartId]);
 
-    const totalQuantity = cart.cart_item.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-
- 
-  
+  const totalQuantity = user
+    ? cart.cart_item.reduce((total, item) => total + item.quantity, 0)
+    : 0;
 
   return (
     <header className="bg-slate-800 ">
@@ -47,7 +43,7 @@ function Header() {
             <button
               onClick={() => {
                 localStorage.clear("user");
-                return window.location.reload();
+                return (window.location.href = "/");
               }}
               className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent bg-slate-50 hover:bg-gray-600 h-9 px-4 py-2 absolute md:right-8 md:top-6"
             >

@@ -5,7 +5,7 @@ const Cart = () => {
   const [cart, setCart] = useState({ cart_item: [] });
   const [products, setProduct] = useState([]);
 
-  const {cartId } = useParams();
+  const { cartId } = useParams();
 
   useEffect(() => {
     axios
@@ -55,23 +55,19 @@ const Cart = () => {
     }, 0);
   };
 
-  
-  
   const remove = (Id) => {
-    
     // Gọi API để xóa sản phẩm khỏi giỏ hàng dựa trên productId
     axios
       .delete(`http://localhost:3001/deleteitem/${cartId}/${Id}`)
       .then((updatedCart) => {
         window.location.href = `/cart/${cartId}`;
         setCart(updatedCart);
-        
       })
       .catch((error) => console.log("Sản phẩm chưa được xóa ", error));
   };
 
   return (
-    <div>
+    <>
       {cart.cart_item?.length > 0 ? (
         <div class="relative overflow-x-auto mx-auto shadow-md sm:rounded-lg w-[80%]">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -191,15 +187,16 @@ const Cart = () => {
                 <td></td>
                 <td className="text-center">Tổng tiền: </td>
                 <td>{sumPrice()}</td>
-                <td></td>
+                <td>
+                  <Link to="/checkout">
+                    <button className="bg-blue-500 text-base p-1 rounded-2xl right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+                      Thanh Toán
+                    </button>
+                  </Link>
+                </td>
               </tr>
             </tbody>
           </table>
-          <Link to="/checkout">
-            <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
-              Thanh toán
-            </button>
-          </Link>
         </div>
       ) : (
         <div class="bg-gray-100 h-screen flex items-center justify-center">
@@ -220,7 +217,7 @@ const Cart = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 export default Cart;

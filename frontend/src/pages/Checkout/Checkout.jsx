@@ -26,8 +26,8 @@ function Checkout() {
         <p class="text-xl font-medium">Thông tin thanh toán</p>
         <p class="text-gray-400">Vui lòng hoàn thành quá trình thanh toán.</p>
         <div class="">
-          <label for="email" class="mt-4 mb-2 block text-sm font-medium">
-            Email
+          <label for="Number" class="mt-4 mb-2 block text-sm font-medium">
+            Số điện thoại
           </label>
           <div class="relative">
             <input
@@ -54,7 +54,7 @@ function Checkout() {
             </div>
           </div>
           <label for="card-holder" class="mt-4 mb-2 block text-sm font-medium">
-            Họ tên
+            Tên
           </label>
           <div class="relative">
             <input

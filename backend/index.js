@@ -5,6 +5,7 @@ const ProductModel = require("./models/products");
 const CategoryModel = require("./models/categories");
 const UserModel = require("./models/users");
 const createCart = require("./models/carts");
+const OrderDetailModel = require("./models/orderdetail");
 
 const app = express();
 app.use(cors());
@@ -260,6 +261,12 @@ app.delete("/deleteitem/:userId/:productId", (req, res) => {
     });
 });
 
-
-
-
+//trạng thái sản phẩm 
+app.put('/updatestatuspro/:productId', (req, res) => {
+  const productId = req.params.productId;
+  ProductModel.findByIdAndUpdate({_id:productId}, {
+    status: req.body.status
+  })
+  .then(product => res.json(product))
+  .catch(err => res.json(err))
+})

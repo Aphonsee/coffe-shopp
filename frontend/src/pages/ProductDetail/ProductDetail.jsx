@@ -6,7 +6,7 @@ export default function ProductDetail() {
   const [products, setProduct] = useState({});
   const { productId } = useParams();
   //const [cart,setCart]=useState({});
-  const [cartItems, setCartItems] = useState([]);
+  const user = localStorage.getItem("user");
 
   useEffect(() => {
     axios
@@ -70,12 +70,16 @@ export default function ProductDetail() {
                   Giá: {products.price} VNĐ
                 </p>
                 <div>
-                  <button
-                    onClick={handleAddToCart}
-                    className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
-                  >
-                    Thêm vào giỏ hàng
-                  </button>
+                  {!user ? (
+                    <h1 className="mt-10 text-lg text-cyan-900">Hãy đăng nhập để mua hàng nhé !!!</h1>
+                  ) : (
+                    <button
+                      onClick={handleAddToCart}
+                      className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
