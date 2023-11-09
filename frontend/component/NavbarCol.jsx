@@ -47,7 +47,7 @@ function NavbarCol() {
           data-te-sidenav-menu-ref>
           {categories.map((item) => {
             return(
-          <li class="relative pt-1 shadow-md">
+          <li class="relative pt-1 shadow-sm">
             <Link to={`/categories/${item._id}`}
 
               class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[1.3rem] text-black outline-none  dark:hover:bg-blue-700/10 dark:focus:bg-white/10 dark:active:bg-white/10"

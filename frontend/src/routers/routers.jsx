@@ -23,8 +23,7 @@ const Routers = () => {
     <Route path="/signin" element={<Signin/>}/>
     <Route path="/signup" element={<SignUp/>}/>
     <Route path="/qlproducts" element={<QLProducts/>}></Route>
-     <Route path="/cart/:cartId" element={<Cart />} />
-    
+    <Route path="/cart/:cartId" element={<Cart />} />
     <Route path="/updatepro/:productId" element={<UpdateProduct/>}/>
     <Route path="/createPro" element={<CreateProduct/>}></Route>
     <Route path="/checkout" element={<Checkout/>}></Route>

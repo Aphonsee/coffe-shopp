@@ -1,7 +1,4 @@
-/*
-Bao gồm cart_items: [], userId: ObjectId, 2 cái này là cơ bản
 
-*/
 const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema({
