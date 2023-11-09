@@ -22,24 +22,13 @@ const Routers = () => {
     <Route path="/categories/:categoryId" element={<Cate_Product/>}/>
     <Route path="/signin" element={<Signin/>}/>
     <Route path="/signup" element={<SignUp/>}/>
-    <Route path="/cart" element={<Cart/>}/>
+     <Route path="/cart/:cartId" element={<Cart />} />
     <Route path="/adminPage" element={<Admin/>}></Route>
     <Route path="/updatepro/:productId" element={<UpdateProduct/>}/>
     <Route path="/createPro" element={<CreateProduct/>}></Route>
     <Route path="/checkout" element={<Checkout/>}></Route>
   </Routes>
-}
-  return (
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/productList" element={<ProductList />}></Route>
-      <Route path="/productdetail/:productId" element={<ProductDetail />} />
-      <Route path="/categories/:categoryId" element={<Cate_Product />} />
-      <Route path="/cart/:cartId" element={<Cart />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/signup" element={<SignUp />} />
-    </Routes>
-  );
+
 };
 
 export default Routers;

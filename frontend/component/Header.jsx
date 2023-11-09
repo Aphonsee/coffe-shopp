@@ -1,15 +1,27 @@
 import { Popover} from '@headlessui/react'
-import { useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-
-
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
   const user = localStorage.getItem('user')
   const userId = localStorage.getItem("userId");
+   const [cart, setCart] = useState({ cart_item: [] });
+   const { cartId } = useParams();
+    useEffect(() => {
+      axios
+        .get(`http://localhost:3001/getcart/${userId}`)
+        .then((cart) => setCart(cart.data))
+        .catch((err) => console.log(err));
+    }, [cartId]);
 
-  console.log(user)
+    const totalQuantity = cart.cart_item.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+ 
   
 
   return (
@@ -82,7 +94,7 @@ function Header() {
             </svg>
 
             <div class="absolute top-0 right-0 -mt-[4px] -mr-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-              <span>1</span>
+              <span>{totalQuantity}</span>
             </div>
           </Link>
           {!user ? (
