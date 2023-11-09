@@ -283,3 +283,13 @@ app.post("/createpro", (req, res) => {
   .then(product => res.json(product))
   .catch(err => res.json(err))
 })
+
+//trạng thái sản phẩm 
+app.put('/updatestatuspro/:productId', (req, res) => {
+  const productId = req.params.productId;
+  ProductModel.findByIdAndUpdate({_id:productId}, {
+    status: req.body.status
+  })
+  .then(product => res.json(product))
+  .catch(err => res.json(err))
+})

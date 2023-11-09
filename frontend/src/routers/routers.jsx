@@ -7,7 +7,7 @@ import Cate_Product from "../pages/ProductList/Cate_Product";
 import Signin from "../pages/Signin/index";
 import SignUp from "../pages/SignUp";
 import Cart from "../pages/Cart/Cart";
-import Admin from "../admin/QLProducts";
+import QLProducts from "../admin/QLProducts";
 import UpdateProduct from "../admin/FormUpdate/UpdateProduct";
 import CreateProduct from "../admin/FormCreate/CreateProduct";
 import Checkout from "../pages/Checkout/Checkout";
@@ -22,8 +22,8 @@ const Routers = () => {
     <Route path="/categories/:categoryId" element={<Cate_Product/>}/>
     <Route path="/signin" element={<Signin/>}/>
     <Route path="/signup" element={<SignUp/>}/>
-    <Route path="/cart" element={<Cart/>}/>
-    <Route path="/adminPage" element={<Admin/>}></Route>
+    <Route path="/cart/:Id" element={<Cart/>}/>
+    <Route path="/qlproducts" element={<QLProducts/>}></Route>
     <Route path="/updatepro/:productId" element={<UpdateProduct/>}/>
     <Route path="/createPro" element={<CreateProduct/>}></Route>
     <Route path="/checkout" element={<Checkout/>}></Route>

@@ -39,14 +39,14 @@ function UpdateProduct() {
       })
       .then((result) => {
         console.log(result);
-        navi("/adminPage");
+        navi("/qlproducts");
       })
       .catch((err) => console.log(err));
   };
 
   return (
     <>
-      <div class="max-w-md mx-auto bg-gray-400 p-6 rounded-md shadow-md">
+      <div class="w-[50%] mx-auto bg-gray-400 p-6 rounded-md shadow-md">
         <h1 class="text-2xl font-semibold mb-4">Cập Nhật Sản Phẩm</h1>
         <form
           onSubmit={Update}

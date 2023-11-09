@@ -10,7 +10,8 @@ const productSchema = new mongoose.Schema(
       ref: 'Category',// ref tới cat
       required: true, //Bắt buộc phải có khi tạo sản phẩm
       type: mongoose.Types.ObjectId //kiểu dữ liệu của mongodb
-    }
+    },
+    status: Boolean
   }
 )
 
