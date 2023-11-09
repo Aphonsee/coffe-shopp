@@ -1,10 +1,10 @@
 import React from 'react'
 
-function QLUser() {
+function QLDH() {
   return (
     <div>
         
     </div>
   )
 }
-export default QLUser
+export default QLDH

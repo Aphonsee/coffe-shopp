@@ -34,6 +34,7 @@ export default function ProductDetail() {
         console.error("Lỗi khi thêm sản phẩm vào giỏ hàng", error);
       });
   };
+  const SIZE = ["S", "M", "L"];
 
   return (
     <>
@@ -44,7 +45,7 @@ export default function ProductDetail() {
               <div className="w-1/2 px-44">
                 <img
                   src={products.imagePro}
-                  className="border-2 border-cyan-800 h-fit"
+                  className="border-2 border-cyan-800 h-[30rem] w-[22rem]"
                 />
               </div>
               <div className="w-1/2 pl-8">
@@ -54,7 +55,7 @@ export default function ProductDetail() {
                 <p className="text-cyan-800 text-lg ">Size:</p>
                 <p className="text-sm">
                   {" "}
-                  {products.size?.map((sz) => {
+                  {SIZE.map((sz) => {
                     return (
                       <div
                         className="border-solid border-2 rounded-md py-px px-1.5 my-2 inline-block mr-3 hover:bg-slate-500 "

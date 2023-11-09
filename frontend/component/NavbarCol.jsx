@@ -34,7 +34,7 @@ function NavbarCol() {
     <div>
         <nav
         id="sidenav-8"
-        class="mt-16 z-[1035] h-full bg-white data-[te-sidenav-hidden='false']:translate-x-0"
+        class="mt-3 z-[1035] h-full bg-white data-[te-sidenav-hidden='false']:translate-x-0"
         data-te-sidenav-init
         data-te-sidenav-hidden="false"
         data-te-sidenav-position="fixed"
@@ -47,7 +47,7 @@ function NavbarCol() {
           data-te-sidenav-menu-ref>
           {categories.map((item) => {
             return(
-          <li class="relative pt-4 shadow-sm">
+          <li class="relative pt-1 shadow-md">
             <Link to={`/categories/${item._id}`}
 
               class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[1.3rem] text-black outline-none  dark:hover:bg-blue-700/10 dark:focus:bg-white/10 dark:active:bg-white/10"

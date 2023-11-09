@@ -116,7 +116,7 @@ function Header() {
             <div className="text-purple-500 text-xl flex ml-5">
               <h1>{user.toString().toLocaleUpperCase()}</h1>
               {user.toString().toLocaleUpperCase() === "ADMIN" && (
-                <Link to="/adminPage">
+                <Link to="/qlproducts">
                   <button className="bg-white text-black hover:bg-gray-600 h-9 px-2 py-2 md:right-8 md:top-6 rounded-md ml-3 text-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
