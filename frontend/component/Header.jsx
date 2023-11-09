@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
 function Header() {
   const user = localStorage.getItem('user')
   const userId = localStorage.getItem("userId");
@@ -16,10 +15,10 @@ function Header() {
         .catch((err) => console.log(err));
     }, [cartId]);
 
-    const totalQuantity = cart.cart_item.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
+    // const totalQuantity = cart.cart_item.reduce(
+    //   (total, item) => total + item.quantity,
+    //   0
+    // );
 
  
   
@@ -94,7 +93,7 @@ function Header() {
             </svg>
 
             <div class="absolute top-0 right-0 -mt-[4px] -mr-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-              <span>{totalQuantity}</span>
+              <span>1</span>
             </div>
           </Link>
           {!user ? (

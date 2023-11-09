@@ -8,10 +8,19 @@ const Cart = () => {
   const {cartId } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/getcart/${cartId}`)
-      .then((cart) => setCart(cart.data))
-      .catch((err) => console.log(err));
+    const fetchCartData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/getcart/${cartId}`
+        );
+        setCart(response.data);
+        // localStorage.setItem("cart", JSON.stringify(response.data.cart_item));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchCartData();
   }, [cartId]);
 
   useEffect(() => {
@@ -29,7 +38,7 @@ const Cart = () => {
       .catch((err) => console.log(err));
   }, [cart.cart_item]);
 
-  const increaseQuantity = (index) => {
+  const increaseQuantity1 = (index) => {
     const updatedCart = [...cart.cart_item];
     updatedCart[index].quantity += 1;
     cart.cart_item[index].price =
@@ -37,23 +46,53 @@ const Cart = () => {
       updatedCart[index].quantity;
     setCart({ ...cart, cart_item: updatedCart });
   };
+  const increaseQuantity = (Id) => {
+    
+    // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
+    axios
+      .put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
+        productId: Id,
+      })
+      .then((response) => {
+        console.log("Sản phẩm đã được thêm 1", response.data);
+        setCart(...cart);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tăng số lượng sản phẩm ", error);
+      });
+  };
+  const decreaseQuantity = (Id) => {
+    // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
+    axios
+      .put(`http://localhost:3001/cart/decreaseQuantity/${cartId}/${Id}`, {
+        productId: Id,
+      })
+      .then((response) => {
+        console.log("Sản phẩm đã được giảm 1", response.data);
+        setCart(response);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi giảm số lượng sản phẩm ", error);
+      });
 
-  const decreaseQuantity = (index) => {
-    const updatedCart = [...cart.cart_item];
-    if (updatedCart[index].quantity > 1) {
-      updatedCart[index].quantity -= 1;
-      cart.cart_item[index].price =
-        (cart.cart_item[index].price / (updatedCart[index].quantity + 1)) *
-        updatedCart[index].quantity;
-      setCart({ ...cart, cart_item: updatedCart });
-    }
   };
 
-  const sumPrice = () => {
+ 
+
+  const sumPrice1 = () => {
     return cart.cart_item?.reduce((prev, current) => {
       return (prev += current.price);
     }, 0);
   };
+  const sumPrice=() =>{
+    let totalPrice = 0;
+
+    cart.cart_item?.forEach((product) => {
+      totalPrice += product.price * product.quantity;
+    });
+
+    return totalPrice;
+  }
 
   
   
@@ -107,7 +146,7 @@ const Cart = () => {
                   <td class="px-6 py-4">
                     <div class="flex items-center space-x-3">
                       <button
-                        onClick={() => decreaseQuantity(index)}
+                        onClick={() => decreaseQuantity(product._id)}
                         class="inline-flex items-center justify-center p-1 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         type="button"
                       >
@@ -137,7 +176,7 @@ const Cart = () => {
                         />
                       </div>
                       <button
-                        onClick={() => increaseQuantity(index)}
+                        onClick={() =>increaseQuantity(product._id)}
                         class="inline-flex items-center justify-center h-6 w-6 p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         type="button"
                       >

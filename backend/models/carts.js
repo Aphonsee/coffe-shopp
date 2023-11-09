@@ -24,7 +24,7 @@ const cartSchema = new mongoose.Schema({
     required: true, //Bắt buộc phải có khi tạo giỏ hàng
     type: mongoose.Types.ObjectId,
   },
-  // totalPrice: Number,
+  //  totalPrice: Number,
 });
 const CartModel = mongoose.model("Cart_user", cartSchema);
 module.exports = CartModel;

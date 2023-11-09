@@ -59,7 +59,7 @@ app.get("/getusers", (req, res) => {
     .catch((err) => res.json(err));
 });
 //get cart
-app.get("/getcart/:userId", (req, res) => {
+ app.get("/getcart/:userId", (req, res) => {
   const userId = req.params.userId;
   createCart
     .findOne({ userId: userId })
@@ -159,9 +159,7 @@ app.post("/cart/addItems", (req, res) => {
           // Nếu sản phẩm đã tồn tại, tăng số lượng
           existingProduct.quantity += quantity;
           existingProduct.price *= existingProduct.quantity;
-           const totalQuantity = cart.cart_item.reduce(
-      (total, item) => total + item.quantity,
-      0);
+          
 
           //hmm hung nghi la price no tang len r a
           //con bug gi nua hok no kh len cai giao dien nua do
@@ -254,6 +252,102 @@ app.delete("/deleteitem/:userId/:productId", (req, res) => {
       } else {
         res.status(404).json({ error: "Không tìm thấy giỏ hàng của người dùng" });
       }
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
+    
+});
+// tăng số lượng sản phẩm 
+app.put("/cart/increaseQuantity/:userId/:productId", (req, res) => {
+  const userId = req.params.userId;
+  const productId = req.params.productId;
+  console.log(userId);
+  console.log(productId);
+  
+
+  createCart
+    .findOne({ userId: userId })
+    .then((cart) => {
+      if (cart) {
+        const existingProduct = cart.cart_item.find(
+          (item) => item.productId.toString() === productId.toString()
+        );
+
+        if (existingProduct) {
+          // Tăng số lượng sản phẩm
+          existingProduct.quantity += 1;
+
+          // Lưu giỏ hàng sau khi cập nhật
+          cart
+            .save()
+            .then(() => {
+              res
+                .status(200)
+                .json({ message: "Sản phẩm đã bị xóa khỏi giỏ hàng" });
+            })
+            .catch((error) => {
+              res.status(500).json({ error: error.message });
+            });
+        } else {
+          res
+            .status(404)
+            .json({ error: "Không tìm thấy sản phẩm trong giỏ hàng" });
+        }
+
+        
+      } else {
+        res
+          .status(404)
+          .json({ error: "Không tìm thấy giỏ hàng của người dùng" });
+      }
+     return app.get("/getcart/:userId");
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
+
+});
+// API để giảm số lượng sản phẩm trong giỏ hàng
+app.put("/cart/decreaseQuantity/:userId/:productId", (req, res) => {
+  const userId = req.params.userId;
+  const productId = req.params.productId;
+  
+
+  createCart
+    .findOne({ userId: userId })
+    .then((cart) => {
+      if (cart) {
+        const existingProduct = cart.cart_item.find(
+          (item) => item.productId.toString() === productId.toString()
+        );
+
+        if (existingProduct) {
+          // Tăng số lượng sản phẩm
+          existingProduct.quantity -= 1;
+
+          // Lưu giỏ hàng sau khi cập nhật
+          cart
+            .save()
+            .then(() => {
+              res
+                .status(200)
+                .json({ message: "Sản phẩm đã giảm " });
+            })
+            .catch((error) => {
+              res.status(500).json({ error: error.message });
+            });
+        } else {
+          res
+            .status(404)
+            .json({ error: "Không tìm thấy sản phẩm trong giỏ hàng" });
+        }
+      } else {
+        res
+          .status(404)
+          .json({ error: "Không tìm thấy giỏ hàng của người dùng" });
+      }
+      return app.get("/getcart/:userId");
     })
     .catch((error) => {
       res.status(500).json({ error: error.message });

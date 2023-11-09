@@ -22,7 +22,6 @@ const Routers = () => {
     <Route path="/categories/:categoryId" element={<Cate_Product/>}/>
     <Route path="/signin" element={<Signin/>}/>
     <Route path="/signup" element={<SignUp/>}/>
-    <Route path="/cart/:Id" element={<Cart/>}/>
     <Route path="/qlproducts" element={<QLProducts/>}></Route>
      <Route path="/cart/:cartId" element={<Cart />} />
     
