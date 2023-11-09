@@ -33,9 +33,8 @@ function Checkout() {
             <input
               type="text"
               id="email"
-              name="email"
               class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-              placeholder="your.email@gmail.com"
+              
             />
             <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
               <svg
@@ -111,16 +110,7 @@ function Checkout() {
             </div>
           </div>
 
-          <div class="mt-6 border-t border-b py-2">
-            <div class="flex items-center justify-between">
-              <p class="text-sm font-medium text-gray-900">
-                Giá tất cả sản phẩm
-              </p>
-              <p class="font-semibold text-gray-900">
-                
-              </p>
-            </div>
-          </div>
+          
           <div class="mt-6 flex items-center justify-between">
             <p class="text-sm font-medium text-gray-900">Tổng hóa đơn</p>
             <p class="text-2xl font-semibold text-gray-900">

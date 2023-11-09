@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 const Cart = () => {
   const [cart, setCart] = useState({ cart_item: [] });
@@ -195,10 +195,11 @@ const Cart = () => {
               </tr>
             </tbody>
           </table>
-
-          <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
-            Thanh toán
-          </button>
+          <Link to="/checkout">
+            <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+              Thanh toán
+            </button>
+          </Link>
         </div>
       ) : (
         <div class="bg-gray-100 h-screen flex items-center justify-center">
