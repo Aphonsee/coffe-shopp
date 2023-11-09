@@ -5,7 +5,7 @@ const Cart = () => {
   const [cart, setCart] = useState({ cart_item: [] });
   const [products, setProduct] = useState([]);
 
-  const { cartId } = useParams();
+  const {cartId } = useParams();
 
   useEffect(() => {
     axios
@@ -14,20 +14,8 @@ const Cart = () => {
       .catch((err) => console.log(err));
   }, [cartId]);
 
-  //con bug nao nua hok ua s hai 2 ly ma 1000000
-  // useEffect(() => {
-  //   cart.cart_item.forEach((product) => {
-  //     axios
-  //       .get(`http://localhost:3001/getproducts/${product.productId}`)
-  //       .then((response) => {
-  //         setProduct(response.data);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   });
-  // }, [cart.cart_item]);
-
   useEffect(() => {
-    const productPromises = cart.cart_item.map((product) => {
+    const productPromises = cart.cart_item?.map((product) => {
       return axios.get(
         `http://localhost:3001/getproducts/${product.productId}`
       );
@@ -44,7 +32,8 @@ const Cart = () => {
   const increaseQuantity = (index) => {
     const updatedCart = [...cart.cart_item];
     updatedCart[index].quantity += 1;
-    cart.cart_item[index].price =(cart.cart_item[index].price / (updatedCart[index].quantity - 1)) *
+    cart.cart_item[index].price =
+      (cart.cart_item[index].price / (updatedCart[index].quantity - 1)) *
       updatedCart[index].quantity;
     setCart({ ...cart, cart_item: updatedCart });
   };
@@ -65,9 +54,25 @@ const Cart = () => {
       return (prev += current.price);
     }, 0);
   };
+
+  
+  
+  const remove = (Id) => {
+    
+    // Gọi API để xóa sản phẩm khỏi giỏ hàng dựa trên productId
+    axios
+      .delete(`http://localhost:3001/deleteitem/${cartId}/${Id}`)
+      .then((updatedCart) => {
+        window.location.href = `/cart/${cartId}`;
+        setCart(updatedCart);
+        
+      })
+      .catch((error) => console.log("Sản phẩm chưa được xóa ", error));
+  };
+
   return (
     <div>
-      {cart.cart_item.length > 0 ? (
+      {cart.cart_item?.length > 0 ? (
         <div class="relative overflow-x-auto mx-auto shadow-md sm:rounded-lg w-[80%]">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -88,8 +93,7 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              
-              {products.map((product, index) => (
+              {products?.map((product, index) => (
                 <tr
                   key={index}
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -127,7 +131,6 @@ const Cart = () => {
                         <input
                           type="number"
                           id={product._id}
-                          id={product._id}
                           class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           value={cart.cart_item[index].quantity}
                           required
@@ -162,7 +165,7 @@ const Cart = () => {
                   </td>
                   <td class="px-6 py-4">
                     <button
-                      //onClick={() => remove(product.id)}
+                      onClick={() => remove(product._id)}
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >
                       <svg
@@ -192,11 +195,10 @@ const Cart = () => {
               </tr>
             </tbody>
           </table>
-          <Link to="/checkout">
-            <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
-              Thanh toán
-            </button>
-          </Link>
+
+          <button className="p-2 max-w-lg bg-blue-500 rounded-2xl fixed right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+            Thanh toán
+          </button>
         </div>
       ) : (
         <div class="bg-gray-100 h-screen flex items-center justify-center">
