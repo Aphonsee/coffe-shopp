@@ -7,20 +7,18 @@ const Cart = () => {
 
   const { cartId } = useParams();
 
-  
-    const fetchCartData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/getcart/${cartId}`
-        );
-        setCart(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/getcart/${cartId}`
+      );
+      setCart(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    fetchCartData();
-  
+  fetchCartData();
 
   useEffect(() => {
     const productPromises = cart.cart_item?.map((product) => {
@@ -37,9 +35,7 @@ const Cart = () => {
       .catch((err) => console.log(err));
   }, [cart.cart_item]);
 
-  
   const increaseQuantity = (Id) => {
-    
     // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
     axios
       .put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
@@ -53,34 +49,46 @@ const Cart = () => {
         console.error("Lỗi khi tăng số lượng sản phẩm ", error);
       });
   };
+
   const decreaseQuantity = (Id) => {
-    // Gọi phương thức POST để giảm số lượng sản phẩm trong giỏ hàng
-    axios
-      .put(`http://localhost:3001/cart/decreaseQuantity/${cartId}/${Id}`, {
-        productId: Id,
-      })
-      .then((response) => {
-        if(response > 0) {
-          console.log("Sản phẩm đã được giảm 1", response.data);
-          setCart(response);
-        } else {
-          remove(response)
-        }
-      })
-      .catch((error) => {
-        console.error("Lỗi khi giảm số lượng sản phẩm ", error);
-      });
+    // Find the product in the cart
+    const productIndex = cart.cart_item.findIndex(
+      (item) => item.productId === Id
+    );
 
+    if (productIndex !== -1) {
+      // Get the current quantity
+      const currentQuantity = cart.cart_item[productIndex].quantity;
+
+      if (currentQuantity > 1) {
+        // If the quantity is greater than 1, decrease it
+        axios
+          .put(`http://localhost:3001/cart/decreaseQuantity/${cartId}/${Id}`, {
+            productId: Id,
+          })
+          .then((response) => {
+            const updatedCart = { ...cart };
+            updatedCart.cart_item[productIndex].quantity = currentQuantity - 1;
+            setCart(updatedCart);
+          })
+          .catch((error) => {
+            console.error("Lỗi khi giảm số lượng sản phẩm ", error);
+          });
+      } else {
+        // If the quantity is 1, remove the product from the cart
+        axios
+          .delete(`http://localhost:3001/deleteitem/${cartId}/${Id}`)
+          .then((updatedCart) => {
+            setCart(updatedCart);
+          })
+          .catch((error) => {
+            console.error("Lỗi khi xóa sản phẩm ", error);
+          });
+      }
+    }
   };
 
- 
-
-  const sumPrice1 = () => {
-    return cart.cart_item?.reduce((prev, current) => {
-      return (prev += current.price);
-    }, 0);
-  };
-  const sumPrice=() =>{
+  const sumPrice = () => {
     let totalPrice = 0;
 
     cart.cart_item?.forEach((product) => {
@@ -88,7 +96,7 @@ const Cart = () => {
     });
 
     return totalPrice;
-  }
+  };
 
   const remove = (Id) => {
     // Gọi API để xóa sản phẩm khỏi giỏ hàng dựa trên productId
@@ -168,7 +176,7 @@ const Cart = () => {
                         />
                       </div>
                       <button
-                        onClick={() =>increaseQuantity(product._id)}
+                        onClick={() => increaseQuantity(product._id)}
                         class="inline-flex items-center justify-center h-6 w-6 p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         type="button"
                       >
