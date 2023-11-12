@@ -118,8 +118,13 @@ const Cart = () => {
     }
   };
 
-
-  
+  const handleCheckout = () => {
+    // Chuyển hướng đến trang thanh toán và truyền dữ liệu giỏ hàng
+    history.push({
+      pathname: "/checkout",
+      state: { cart },
+    });
+  };
 
   return (
     <>

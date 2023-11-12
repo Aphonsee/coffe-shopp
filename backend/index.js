@@ -50,7 +50,7 @@ app.get("/getproducts/:_id", (req, res) => {
 app.get("/getcategories", (req, res) => {
   CategoryModel.find()
     .then((categories) => res.json(categories))
-    .catch((err) => err.json(err));
+    .catch((err) => res.json(err));
 });
 
 //get data user
