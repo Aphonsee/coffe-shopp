@@ -47,21 +47,6 @@ const Cart = () => {
   }, [cart.cart_item]);
 
   
-  const increaseQuantity1 = (Id) => {
-    
-    // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
-    axios
-      .put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
-        productId: Id,
-      })
-      .then((response) => {
-        console.log("Sản phẩm đã được thêm 1", response.data);
-        setCart(...cart);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi tăng số lượng sản phẩm ", error);
-      });
-  };
   const increaseQuantity = async (Id) => {
     try {
       const response = await axios.put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
@@ -87,9 +72,9 @@ const Cart = () => {
          console.error("Lỗi khi giảm số lượng sản phẩm ", error);
        });
    };
+  
 
-
-
+ 
   const sumPrice=() =>{
     let totalPrice = 0;
 
