@@ -1,27 +1,116 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function Checkout() {
+  const [cart, setCart] = useState({ cart_item: [] });
+  const [products, setProduct] = useState([]);
+  const userId = localStorage.getItem("userId");
+  const [name, setName] = useState();
+  const [sdt, setSdt] = useState();
+  const navi = useNavigate();
+
+  const [adress, setAdress] = useState();
+
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/getcart/${userId}`
+      );
+      setCart(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchCartData();
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const productPromises = cart.cart_item?.map((product) => {
+          return axios.get(
+            `http://localhost:3001/getproducts/${product.productId}`
+          );
+        });
+
+        const responses = await Promise.all(productPromises);
+        const productsData = responses.map((response) => response.data);
+        setProduct(productsData);
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu sản phẩm:", error);
+
+        // Xử lý lỗi theo ý của bạn, ví dụ: hiển thị thông báo cho người dùng
+      }
+    };
+
+    // Gọi hàm fetchProductData
+    fetchProductData();
+  }, [cart.cart_item]);
+
+  const sumPrice = () => {
+    let totalPrice = 0;
+
+    cart.cart_item?.forEach((product) => {
+      totalPrice += product.price * product.quantity;
+    });
+
+    return totalPrice;
+  };
+
+  const Submit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/oder", {
+        status: "Hoàn thành",
+        name,
+        sdt,
+        adress,
+        cart_item: cart.cart_item,
+        totalPrice: sumPrice(),
+        userId,
+      })
+
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
+      axios
+      .delete(`http://localhost:3001/deletecart/${userId}`)
+      .then((updatedCart) => {
+        setCart(...cart);
+      })
+      .catch((error) => console.log("Sản phẩm chưa được xóa ", error));
+      alert("Thanh toán thành công ");
+      navi("/productlist")
+  
+  };
   return (
     <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
       <div class="px-4 pt-8">
         <p class="text-xl font-medium">Sản phẩm thanh toán</p>
-        <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-          <div class="flex flex-col rounded-lg bg-white sm:flex-row">
-            <img
-              class="m-2 h-24 w-28 rounded-md border object-cover object-center"
-              src="{value.image}"
-              alt=""
-            />
-            <div class="flex w-full flex-col px-4 py-4">
-              <span class="font-semibold">tên</span>
-              <span class="float-right text-gray-400">
-                aaaaaaaaaaa
-              </span>
-              <p class="text-lg font-bold">giá ở đây</p>
+        {products?.map((product, index) => (
+          <div
+            key={index}
+            class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6"
+          >
+            <div class="flex flex-col rounded-lg bg-white sm:flex-row">
+              <img
+                class="m-2 h-24 w-28 rounded-md border object-cover object-center"
+                src={product.imagePro}
+              />
+              <div class="flex w-full flex-col px-4 py-4">
+                <span class="font-semibold">{product.namePro}</span>
+                <span class="float-right text-gray-400">
+                  Số lương:{cart.cart_item[index]?.quantity}x
+                </span>
+                <p class="text-lg font-bold">{product.price}</p>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
+
       <div class="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
         <p class="text-xl font-medium">Thông tin thanh toán</p>
         <p class="text-gray-400">Vui lòng hoàn thành quá trình thanh toán.</p>
@@ -31,10 +120,9 @@ function Checkout() {
           </label>
           <div class="relative">
             <input
+              onChange={(e) => setSdt(e.target.value)}
               type="text"
-              id="email"
               class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-              
             />
             <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
               <svg
@@ -58,7 +146,7 @@ function Checkout() {
           </label>
           <div class="relative">
             <input
-              
+              onChange={(e) => setName(e.target.value)}
               type="text"
               id="card-holder"
               name="card-holder"
@@ -83,7 +171,6 @@ function Checkout() {
             </div>
           </div>
 
-          
           <label
             for="billing-address"
             class="mt-4 mb-2 block text-sm font-medium"
@@ -93,7 +180,7 @@ function Checkout() {
           <div class="flex flex-col sm:flex-row">
             <div class="relative w-full">
               <input
-                
+                onChange={(e) => setAdress(e.target.value)}
                 type="text"
                 id="billing-address"
                 name="billing-address"
@@ -110,15 +197,21 @@ function Checkout() {
             </div>
           </div>
 
-          
           <div class="mt-6 flex items-center justify-between">
             <p class="text-sm font-medium text-gray-900">Tổng hóa đơn</p>
-            <p class="text-2xl font-semibold text-gray-900">
-              
-            </p>
+            <p class="text-2xl font-semibold text-gray-900">{sumPrice()}</p>
+          </div>
+          <div>
+            <Link to="/checkout">
+              <button
+                onClick={Submit}
+                className="bg-blue-500 text-base p-1 rounded-2xl right-40 shadow-xl border-2 text-white hover:bg-blue-800"
+              >
+                Thanh Toán
+              </button>
+            </Link>
           </div>
         </div>
-        
       </div>
     </div>
   );

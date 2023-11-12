@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {  useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function ProductDetail() {
@@ -17,6 +17,7 @@ export default function ProductDetail() {
       .catch((err) => console.log(err));
   }, []);
   const userId = localStorage.getItem("userId");
+  
 
   const handleAddToCart = () => {
     // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
@@ -26,9 +27,11 @@ export default function ProductDetail() {
         quantity: 1,
         price: products.price,
         userId,
+        totalPrice: products.price,
       })
       .then((response) => {
         console.log("Sản phẩm đã được thêm vào giỏ hàng", response.data);
+        window.location.href = `/cart/${userId}`;
       })
       .catch((error) => {
         console.error("Lỗi khi thêm sản phẩm vào giỏ hàng", error);
@@ -71,14 +74,18 @@ export default function ProductDetail() {
                 </p>
                 <div>
                   {!user ? (
-                    <h1 className="mt-10 text-lg text-cyan-900">Hãy đăng nhập để mua hàng nhé !!!</h1>
+                    <h1 className="mt-10 text-lg text-cyan-900">
+                      Hãy đăng nhập để mua hàng nhé !!!
+                    </h1>
                   ) : (
-                    <button
-                      onClick={handleAddToCart}
-                      className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
-                    >
-                      Thêm vào giỏ hàng
-                    </button>
+                    
+                      <button
+                        onClick={handleAddToCart}
+                        className="bg-cyan-800 text-white px-4 py-2 rounded-full text-sm mt-7"
+                      >
+                        Thêm vào giỏ hàng
+                      </button>
+                    
                   )}
                 </div>
               </div>

@@ -119,9 +119,6 @@ app.post("/signin", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-//code context cua react nhieu van de nen de hung code backend luon cho ok hunb
-
-//à th vẫn phức tạp :)))
 
 // Lọc danh sách sản phẩm dựa trên categoryId
 app.get("/getcategories/:categoryId", (req, res) => {
@@ -145,6 +142,8 @@ app.post("/cart/addItems", (req, res) => {
   const productId = req.body.productId; // Lấy ID của sản phẩm từ request bo
   const quantity = req.body.quantity; // Lấy số lượng từ request bod
   const price = +req.body.price;
+ 
+
 
   // Kiểm tra xem sản phẩm đã tồn tại trong mảng items_cart hay chưa
   createCart
@@ -159,22 +158,14 @@ app.post("/cart/addItems", (req, res) => {
         if (existingProduct) {
           // Nếu sản phẩm đã tồn tại, tăng số lượng
           existingProduct.quantity += quantity;
-          existingProduct.price *= existingProduct.quantity;
-          
-
-          //hmm hung nghi la price no tang len r a
-          //con bug gi nua hok no kh len cai giao dien nua do
         } else {
-          // Nếu sản phẩm chưa tồn tại, thêm mới sản phẩm vào giỏ hàng
           cart.cart_item.push({
             productId,
             quantity,
             price,
           });
         }
-        
 
-        // Lưu lại giỏ hàng sau khi thay đổ
         cart
           .save()
           .then(() => {
@@ -264,10 +255,6 @@ app.delete("/deleteitem/:userId/:productId", (req, res) => {
 app.put("/cart/increaseQuantity/:userId/:productId", (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
-  console.log(userId);
-  console.log(productId);
-  
-
   createCart
     .findOne({ userId: userId })
     .then((cart) => {
@@ -365,3 +352,25 @@ app.put('/updatestatuspro/:productId', (req, res) => {
   .then(product => res.json(product))
   .catch(err => res.json(err))
 })
+app.post('/oder',(req,res)=>{
+  // console.log(req.body)
+   OrderDetailModel.create(req.body)
+     .then((product) => {
+      // console.log(res.json(product));
+      return res.json(product);
+     })
+     .catch((err) => res.json(err));
+})
+app.delete("/deletecart/:userId", (req, res) => {
+  const userId=req.params.userId
+  console.log(userId)
+  createCart
+    .findOne({ userId: userId })
+    .then((cart) =>{
+       if (cart)
+       cart.cart_item = [];
+       cart.save();
+    }
+   )
+    .catch((err) => res.json(err));
+});

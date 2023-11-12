@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+
 const Cart = () => {
   const [cart, setCart] = useState({ cart_item: [] });
   const [products, setProduct] = useState([]);
@@ -21,33 +22,39 @@ const Cart = () => {
   fetchCartData();
 
   useEffect(() => {
-    const productPromises = cart.cart_item?.map((product) => {
-      return axios.get(
-        `http://localhost:3001/getproducts/${product.productId}`
-      );
-    });
+    const fetchProductData = async () => {
+      try {
+        const productPromises = cart.cart_item?.map((product) => {
+          return axios.get(
+            `http://localhost:3001/getproducts/${product.productId}`
+          );
+        });
 
-    Promise.all(productPromises)
-      .then((responses) => {
+        const responses = await Promise.all(productPromises);
         const productsData = responses.map((response) => response.data);
         setProduct(productsData);
-      })
-      .catch((err) => console.log(err));
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu sản phẩm:", error);
+
+        // Xử lý lỗi theo ý của bạn, ví dụ: hiển thị thông báo cho người dùng
+      }
+    };
+
+    // Gọi hàm fetchProductData
+    fetchProductData();
   }, [cart.cart_item]);
 
-  const increaseQuantity = (Id) => {
-    // Gọi phương thức POST để thêm sản phẩm vào giỏ hàng
-    axios
-      .put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
-        productId: Id,
-      })
-      .then((response) => {
-        console.log("Sản phẩm đã được thêm 1", response.data);
-        setCart(...cart);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi tăng số lượng sản phẩm ", error);
-      });
+  
+  const increaseQuantity = async (Id) => {
+    try {
+      const response = await axios.put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
+        productId: Id}
+      )
+      console.log("Sản phẩm đã được thêm 1", response.data);
+      setCart(...cart);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const decreaseQuantity = (Id) => {
@@ -96,18 +103,23 @@ const Cart = () => {
     });
 
     return totalPrice;
+  }
+
+  
+  const remove = async (Id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/deleteitem/${cartId}/${Id}`
+      );
+      setCart(response.data);
+      setCart(...cart)
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const remove = (Id) => {
-    // Gọi API để xóa sản phẩm khỏi giỏ hàng dựa trên productId
-    axios
-      .delete(`http://localhost:3001/deleteitem/${cartId}/${Id}`)
-      .then((updatedCart) => {
-        //window.location.href = `/cart/${cartId}`;
-        setCart(updatedCart);
-      })
-      .catch((error) => console.log("Sản phẩm chưa được xóa ", error));
-  };
+
+  
 
   return (
     <>
@@ -232,7 +244,7 @@ const Cart = () => {
                 <td>{sumPrice()}</td>
                 <td>
                   <Link to="/checkout">
-                    <button className="bg-blue-500 text-base p-1 rounded-2xl right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+                    <button onClick={handleCheckout} className="bg-blue-500 text-base p-1 rounded-2xl right-40 shadow-xl border-2 text-white hover:bg-blue-800">
                       Thanh Toán
                     </button>
                   </Link>
