@@ -5,8 +5,11 @@ import axios from "axios";
 export default function ProductDetail() {
   const [products, setProduct] = useState({});
   const { productId } = useParams();
-  //const [cart,setCart]=useState({});
   const user = localStorage.getItem("user");
+  const [selectedSize, setSelectedSize] = useState("S");
+  const [selectedToppings, setSelectedToppings] = useState([]);
+
+
 
   useEffect(() => {
     axios
@@ -27,6 +30,7 @@ export default function ProductDetail() {
         price: products.price,
         userId,
         totalPrice: products.price,
+        topping:selectedToppings,
       })
       .then((response) => {
         console.log("Sản phẩm đã được thêm vào giỏ hàng", response.data);
@@ -35,28 +39,50 @@ export default function ProductDetail() {
       .catch((error) => {
         console.error("Lỗi khi thêm sản phẩm vào giỏ hàng", error);
       });
+      console.log(selectedToppings)
   };
-  const [selectedSize, setSelectedSize] = useState("S");
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
+  
+
+  const handleToppingChange = (topping) => {
+    
+    const newSelection = [...selectedToppings];
+  
+
+    if (newSelection.includes(topping)) {
+      newSelection.splice(newSelection.indexOf(topping), 1);
+    } else {
+      newSelection.push(topping);
+    }
+
+    setSelectedToppings(newSelection);
+    
+  };
+  console.log(selectedToppings)
 
   const SIZE = ["S", "M", "L"];
   const TOPPING = [
     {
+      id:1,
       nameT: "Chân châu đen",
     },
     {
+      id:2,
       nameT: "Chân châu trắng",
     },
     {
+      id:3,
       nameT: "Thạch đào",
     },
     {
+      id:4,
       nameT: "Thạch vải",
     },
     {
+      id:5,
       nameT: "Sương sáo",
     },
   ];
@@ -103,7 +129,7 @@ export default function ProductDetail() {
                 <div className="flex flex-col">
                   {TOPPING.map((item) => {
                     return (
-                      <div class="inline-flex items-center">
+                      <div key={item.id}  class="inline-flex items-center">
                         <label
                           class="relative flex items-center p-3 rounded-full cursor-pointer"
                           for="checkbox"
@@ -112,7 +138,9 @@ export default function ProductDetail() {
                           <input
                             type="checkbox"
                             class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border-2 shadow-lg border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:bg-green-700 checked:before:bg-green-500 hover:before:opacity-10"
-                            id="checkbox"
+                            
+                            //checked={selectedToppings.includes(item.id)}
+                            onChange={() => handleToppingChange(item)}
                           />
                           <div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                             <svg

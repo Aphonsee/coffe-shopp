@@ -35,12 +35,8 @@ const Cart = () => {
         setProduct(productsData);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu sản phẩm:", error);
-
-        // Xử lý lỗi theo ý của bạn, ví dụ: hiển thị thông báo cho người dùng
       }
     };
-
-    // Gọi hàm fetchProductData
     fetchProductData();
   }, [cart.cart_item]);
 
@@ -142,6 +138,9 @@ const Cart = () => {
                 <th scope="col" class="px-14 py-3">
                   Số lượng
                 </th>
+                <th scope="col" class="px-14 py-3">
+                  Topping
+                </th>
                 <th scope="col" class="px-6 py-3">
                   Giá
                 </th>
@@ -216,6 +215,20 @@ const Cart = () => {
                       </button>
                     </div>
                   </td>
+                  <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    {cart.cart_item[index]?.topping?.map(
+                      (topping, toppingIndex) => (
+                        <div key={toppingIndex}>
+                          {topping.nameT}
+                          {toppingIndex <
+                            cart.cart_item[index].topping.length - 1 && (
+                            <br />
+                          )}{" "}
+                          
+                        </div>
+                      )
+                    )}
+                  </td>
                   <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                     ${product.price}
                   </td>
@@ -249,7 +262,10 @@ const Cart = () => {
                 <td>{sumPrice()}</td>
                 <td>
                   <Link to="/checkout">
-                    <button onClick={handleCheckout} className="bg-blue-500 text-base p-1 rounded-2xl right-40 shadow-xl border-2 text-white hover:bg-blue-800">
+                    <button
+                      onClick={handleCheckout}
+                      className="bg-blue-500 text-base p-1 rounded-2xl right-40 shadow-xl border-2 text-white hover:bg-blue-800"
+                    >
                       Thanh Toán
                     </button>
                   </Link>

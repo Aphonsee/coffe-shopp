@@ -14,6 +14,7 @@ const cartSchema = new mongoose.Schema({
       price: {
         type: Number,
       },
+      topping: []
     },
   ],
   userId: {
@@ -21,8 +22,6 @@ const cartSchema = new mongoose.Schema({
     required: true, //Bắt buộc phải có khi tạo giỏ hàng
     type: mongoose.Types.ObjectId,
   },
-  
-  
 });
 const CartModel = mongoose.model("Cart_user", cartSchema);
 module.exports = CartModel;

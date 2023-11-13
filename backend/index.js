@@ -142,6 +142,7 @@ app.post("/cart/addItems", (req, res) => {
   const productId = req.body.productId; // Lấy ID của sản phẩm từ request bo
   const quantity = req.body.quantity; // Lấy số lượng từ request bod
   const price = +req.body.price;
+ const topping=req.body.topping
  
 
 
@@ -163,6 +164,7 @@ app.post("/cart/addItems", (req, res) => {
             productId,
             quantity,
             price,
+            topping,
           });
         }
 
