@@ -4,18 +4,12 @@ import axios from 'axios';
 import Slide from '../../../component/Slide';
 import NavbarCol from '../../../component/NavbarCol';
 
-//const { productId } = useParams();
-
 
 
 function Cate_Product() {
   const {categoryId} = useParams()
-
   const[products, setProduct] = useState([])
 
-
-
-  
   useEffect(() => {
     fetchProductsByCategory();
   }, [categoryId]);
@@ -26,10 +20,6 @@ function Cate_Product() {
       .then((response) => setProduct(response.data))
       .catch((error) => console.log(error));
   };
-
-  console.log(products)
-
-
 
   return (
     <>

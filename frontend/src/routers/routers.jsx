@@ -11,6 +11,8 @@ import QLProducts from "../admin/QLProducts";
 import UpdateProduct from "../admin/FormUpdate/UpdateProduct";
 import CreateProduct from "../admin/FormCreate/CreateProduct";
 import Checkout from "../pages/Checkout/Checkout";
+import { OrderDetail } from "../pages/OrderDetail/OrderDetail";
+import QLDH from "../admin/QLDH";
 
 
 
@@ -23,10 +25,12 @@ const Routers = () => {
     <Route path="/signin" element={<Signin/>}/>
     <Route path="/signup" element={<SignUp/>}/>
     <Route path="/qlproducts" element={<QLProducts/>}></Route>
+    <Route path="/qldh" element={<QLDH/>}></Route>
     <Route path="/cart/:cartId" element={<Cart />} />
     <Route path="/updatepro/:productId" element={<UpdateProduct/>}/>
     <Route path="/createPro" element={<CreateProduct/>}></Route>
     <Route path="/checkout" element={<Checkout/>}></Route>
+    <Route path="/orderdetail/:userId" element={<OrderDetail/>}></Route>
   </Routes>
 }
  

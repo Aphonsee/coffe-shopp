@@ -64,12 +64,12 @@ function Header() {
           >
             Sản phẩm
           </Link>
-          <a
-            href="#"
+          <Link 
+            to={`/orderdetail/${userId}`}
             className="text-lg font-semibold leading-6 text-white hover:text-blue-500"
           >
             Đơn hàng
-          </a>
+          </Link>
         </Popover.Group>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end mr-12">

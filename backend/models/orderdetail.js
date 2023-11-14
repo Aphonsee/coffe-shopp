@@ -24,7 +24,7 @@ const orderDetailSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  diachi: {
+  address: {
     type: String,
     require: true,
   },

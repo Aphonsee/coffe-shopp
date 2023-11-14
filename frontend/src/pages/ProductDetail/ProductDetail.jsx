@@ -31,6 +31,7 @@ export default function ProductDetail() {
         userId,
         totalPrice: products.price,
         topping:selectedToppings,
+        size:selectedSize,
       })
       .then((response) => {
         console.log("Sản phẩm đã được thêm vào giỏ hàng", response.data);
@@ -39,7 +40,7 @@ export default function ProductDetail() {
       .catch((error) => {
         console.error("Lỗi khi thêm sản phẩm vào giỏ hàng", error);
       });
-      console.log(selectedToppings)
+      console.log(selectedSize)
   };
 
   const handleSizeChange = (size) => {

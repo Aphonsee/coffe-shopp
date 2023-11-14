@@ -40,12 +40,14 @@ const Cart = () => {
     fetchProductData();
   }, [cart.cart_item]);
 
-  
   const increaseQuantity = async (Id) => {
     try {
-      const response = await axios.put(`http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`, {
-        productId: Id}
-      )
+      const response = await axios.put(
+        `http://localhost:3001/cart/increaseQuantity/${cartId}/${Id}`,
+        {
+          productId: Id,
+        }
+      );
       console.log("Sản phẩm đã được thêm 1", response.data);
       setCart(...cart);
     } catch (err) {
@@ -99,16 +101,15 @@ const Cart = () => {
     });
 
     return totalPrice;
-  }
+  };
 
-  
   const remove = async (Id) => {
     try {
       const response = await axios.delete(
         `http://localhost:3001/deleteitem/${cartId}/${Id}`
       );
       setCart(response.data);
-      setCart(...cart)
+      setCart(...cart);
     } catch (err) {
       console.log(err);
     }
@@ -129,38 +130,38 @@ const Cart = () => {
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="px-6 py-3">
-                  <span class="sr-only">Image</span>
-                </th>
-                <th scope="col" class="px-6 py-3">
+                
+                <th scope="col" class="px-6 py-3 text-center">
                   Sản phẩm
                 </th>
-                <th scope="col" class="px-14 py-3">
+                <th scope="col" class="px-14 py-3 text-center">
                   Số lượng
                 </th>
-                <th scope="col" class="px-14 py-3">
+                <th scope="col" class="px-14 py-3 text-center">
+                  Size
+                </th>
+                <th scope="col" class="px-14 py-3 text-center">
                   Topping
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                   Giá
                 </th>
-                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3 text-center"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-center">
               {products?.map((product, index) => (
                 <tr
                   key={index}
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
-                  <td class="w-32 p-4">
+                  
+                  <td class="px-6 w-32 py-4 font-semibold text-gray-900 dark:text-white">
                     <img src={product.imagePro} />
-                  </td>
-                  <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                     {product.namePro}
                   </td>
-                  <td class="px-6 py-4">
-                    <div class="flex items-center space-x-3">
+                  <td class="px-6 py-4 text-center">
+                    <div class="flex items-center justify-center space-x-3">
                       <button
                         onClick={() => decreaseQuantity(product._id)}
                         class="inline-flex items-center justify-center p-1 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -215,6 +216,9 @@ const Cart = () => {
                       </button>
                     </div>
                   </td>
+                  <td>
+                    {cart.cart_item[index]?.size}
+                  </td>
                   <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                     {cart.cart_item[index]?.topping?.map(
                       (topping, toppingIndex) => (
@@ -224,7 +228,6 @@ const Cart = () => {
                             cart.cart_item[index].topping.length - 1 && (
                             <br />
                           )}{" "}
-                          
                         </div>
                       )
                     )}
@@ -256,6 +259,7 @@ const Cart = () => {
                 </tr>
               ))}
               <tr class="relative bg-slate-700 text-2xl text-white">
+                <td></td>
                 <td></td>
                 <td></td>
                 <td className="text-center">Tổng tiền: </td>

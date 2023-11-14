@@ -142,8 +142,8 @@ app.post("/cart/addItems", (req, res) => {
   const productId = req.body.productId; // Lấy ID của sản phẩm từ request bo
   const quantity = req.body.quantity; // Lấy số lượng từ request bod
   const price = +req.body.price;
- const topping=req.body.topping
- 
+ const topping=req.body.topping;
+ const size=req.body.size;
 
 
   // Kiểm tra xem sản phẩm đã tồn tại trong mảng items_cart hay chưa
@@ -165,6 +165,7 @@ app.post("/cart/addItems", (req, res) => {
             quantity,
             price,
             topping,
+            size,
           });
         }
 
@@ -374,5 +375,33 @@ app.delete("/deletecart/:userId", (req, res) => {
        cart.save();
     }
    )
+    .catch((err) => res.json(err));
+});
+
+//Đơn hàng theo id người dùng
+app.get('/orderDetails/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const orderDetails = await OrderDetailModel.find({ userId: userId });
+    res.json(orderDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Lỗi server' });
+  }
+});
+
+//Tất cả đơn hàng
+app.get('/getorder', (req, res) => {
+  OrderDetailModel.find()
+  .then((order) => res.json(order))
+  .catch((err) => res.json(err))
+})
+
+//người dùng
+app.get("/getuser/:_id", (req, res) => {
+  const userId = req.params._id;
+  UserModel.findById(userId)
+    .then((user) => res.json(user))
     .catch((err) => res.json(err));
 });

@@ -6,11 +6,12 @@ function Checkout() {
   const [cart, setCart] = useState({ cart_item: [] });
   const [products, setProduct] = useState([]);
   const userId = localStorage.getItem("userId");
+  const user = localStorage.getItem("user");
   const [name, setName] = useState();
   const [sdt, setSdt] = useState();
   const navi = useNavigate();
 
-  const [adress, setAdress] = useState();
+  const [address, setAdress] = useState();
 
   const fetchCartData = async () => {
     try {
@@ -57,6 +58,7 @@ function Checkout() {
 
     return totalPrice;
   };
+  
 
   const Submit = (e) => {
     e.preventDefault();
@@ -65,7 +67,7 @@ function Checkout() {
         status: "Hoàn thành",
         name,
         sdt,
-        adress,
+        address,
         cart_item: cart.cart_item,
         totalPrice: sumPrice(),
         userId,
@@ -92,20 +94,21 @@ function Checkout() {
         {products?.map((product, index) => (
           <div
             key={index}
-            class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6"
+            class="mt-8 space-y-3 rounded-lg border bg-zinc-200 px-2 py-4 sm:px-6"
           >
-            <div class="flex flex-col rounded-lg bg-white sm:flex-row">
+            <div class="flex flex-col rounded-lg bg-zinc-200 sm:flex-row">
               <img
                 class="m-2 h-24 w-28 rounded-md border object-cover object-center"
                 src={product.imagePro}
               />
               <div class="flex w-full flex-col px-4 py-4">
                 <span class="font-semibold">{product.namePro}</span>
-                <span class="float-right text-gray-400">
-                  Số lương:{cart.cart_item[index]?.quantity}x
+                <span class="float-right text-zinc-500">
+                  Số lương: x{cart.cart_item[index]?.quantity}
                 </span>
-                <p class="text-lg font-bold">{product.price}</p>
+                <p class="text-lg">{cart.cart_item[index]?.size}</p>
               </div>
+              <div className="text-2xl py-10">{product.price}</div>
             </div>
           </div>
         ))}
@@ -146,12 +149,13 @@ function Checkout() {
           </label>
           <div class="relative">
             <input
-              onChange={(e) => setName(e.target.value)}
+              // onChange={(e) => setName(e.target.value)}
               type="text"
               id="card-holder"
               name="card-holder"
               class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
               placeholder="Điền họ tên của bạn"
+              value={user}
             />
             <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
               <svg
